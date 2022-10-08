@@ -61,7 +61,9 @@ npm run dev
 ## 在线体验
 
 - admin/admin123  
-- 陆陆续续收到一些打赏，为了更好的体验已用于演示服务器升级。谢谢各位小伙伴。
+- 如果该项目对您有帮助，可以请作者喝个咖啡~
+![扫一扫](https://oscimg.oschina.net/oscnet/up-261828407c9089ad1cc0ce3f41a0ef3fbc0.png)
+
 
 演示地址：暂无， 可先参考Ruoyi的演示网站 http://vue.ruoyi.vip  
 文档地址：TODO http://doc.ruoyi.vip
