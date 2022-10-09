@@ -331,6 +331,7 @@ function getList() {
   loading.value = true;
   listMenu(queryParams.value).then((response) => {
     menuList.value = proxy.handleTree(response, 'menuId');
+  }).finally(() => {
     loading.value = false;
   });
 }

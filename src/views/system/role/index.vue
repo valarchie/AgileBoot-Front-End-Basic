@@ -325,6 +325,7 @@ function getList() {
   listRole(proxy.addTimeRange(queryParams.value, dateRange.value)).then((response) => {
     roleList.value = response.rows;
     total.value = response.total;
+  }).finally(() => {
     loading.value = false;
   });
 }
