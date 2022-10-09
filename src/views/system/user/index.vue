@@ -443,9 +443,10 @@ function getTreeSelect() {
 function getList() {
   loading.value = true;
   listUser(proxy.addTimeRange(queryParams.value, dateRange.value)).then((res) => {
-    loading.value = false;
     userList.value = res.rows;
     total.value = res.total;
+  }).finally(() => {
+    loading.value = false;
   });
 }
 /** 节点单击事件 */
