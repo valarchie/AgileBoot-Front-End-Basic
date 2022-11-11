@@ -386,7 +386,7 @@ function handleAuthUser(row) {
 }
 /** 查询菜单树结构 */
 function getMenuTreeSelect() {
-  menuTreeSelect().then((response) => {
+  getMenuSelectTree().then((response) => {
     menuOptions.value = response;
   });
 }
