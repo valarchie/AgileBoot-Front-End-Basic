@@ -1,43 +1,7 @@
 <template>
   <div class="app-container home">
     <el-row :gutter="20">
-      <el-col :sm="24" :lg="24">
-        <blockquote class="text-warning" style="font-size: 14px">
-          领取阿里云通用云产品优惠券 
-          <br />
-          <el-link
-            href="https://cn.aliyun.com/minisite/goods?from_alibabacloud=&userCode=djbhhf1x"
-            type="primary"
-            target="_blank"
-            >https://cn.aliyun.com/minisite/goods?from_alibabacloud=&userCode=djbhhf1x</el-link
-          >
-          <br />
-          领取腾讯云通用云产品特惠专区优惠券
-          <br />
-          <el-link
-            href="https://url.cn/mKgcHVNb"
-            type="primary"
-            target="_blank"
-            >https://url.cn/mKgcHVNb</el-link
-          >
-          <br />
-          <hr/>
-          阿里云服务器折扣区
-          <el-link href="https://cn.aliyun.com/minisite/goods?from_alibabacloud=&userCode=djbhhf1x" type="primary" target="_blank"
-            >>☛☛点我进入☚☚</el-link
-          >
-          <br/>
-         腾讯云服务器秒杀区
-          <el-link href="https://url.cn/mKgcHVNb" type="primary" target="_blank"
-            >>☛☛点我进入☚☚</el-link
-          ><br />
-          <h4 class="text-danger">
-            云产品通用红包，可叠加官网常规优惠使用。(仅限新用户)
-          </h4>
-        </blockquote>
-
-        <hr />
-      </el-col>
+      <el-col :sm="24" :lg="24"> </el-col>
     </el-row>
     <el-row :gutter="20">
       <el-col :sm="24" :lg="12" style="padding-left: 20px">
@@ -47,8 +11,8 @@
           开发的项目。于是就萌生了基于Ruoyi项目，改造重构一个项目结构良好，可读性高，可维护性高，面向对象，使用模型进行开发（DDD战术设计）
           于是利用业余时间对Ruoyi前后端项目进行了重构改造。
           如此有了AgileBoot管理系统，AgileBoot提供最基础的开发框架，如小型网站管理后台，或供公司内部的小项目使用，提供管理后台模块以及API模块。
-          AgileBoot项目，会致力于高安全，低错误，高项目规范，高性能。 其他花里胡哨的功能会尽量少加进来。像Ruoyi-Pro  芋道源码新起的项目加了一大堆功能。太重了。
-          项目本身稳定性，缺陷可能更得不到保证。
+          AgileBoot项目，会致力于高安全，低错误，高项目规范，高性能。 其他花里胡哨的功能会尽量少加进来。像Ruoyi-Pro
+          芋道源码新起的项目加了一大堆功能。太重了。 项目本身稳定性，缺陷可能更得不到保证。
           所有前端后台代码都经过重构。本来3.5w行的后端代码，精简到1.6w行左右。
         </p>
         <p>
@@ -72,10 +36,7 @@
             @click="goTarget('https://github.com/valarchie/AgileBoot-Front-End')"
             >前端 Github 地址</el-button
           >
-          <el-button
-            icon="HomeFilled"
-            plain
-            @click="goTarget('https://www.cnblogs.com/valarchie/')"
+          <el-button icon="HomeFilled" plain @click="goTarget('https://www.cnblogs.com/valarchie/')"
             >访问博客</el-button
           >
         </p>
@@ -135,17 +96,20 @@
             </p>
             <p>
               <i class="el-icon-user-solid"></i> QQ群：
-              <a href="https://qm.qq.com/cgi-bin/qm/qr?k=TR5guoXS0HssErVWefmdFRirJvfpEvp1&jump_from=webapi&authKey=VkWMmVhp/pNdWuRD8sqgM+Sv2+Vy2qCJQSeLmeXlLtfER2RJBi6zL56PdcRlCmTs" target="_blank">
+              <a
+                href="https://qm.qq.com/cgi-bin/qm/qr?k=TR5guoXS0HssErVWefmdFRirJvfpEvp1&jump_from=webapi&authKey=VkWMmVhp/pNdWuRD8sqgM+Sv2+Vy2qCJQSeLmeXlLtfER2RJBi6zL56PdcRlCmTs"
+                target="_blank"
+              >
                 1398880[点击加群]</a
               >
             </p>
             <p>
-              <i class="el-icon-chat-dot-round"></i> 
+              <i class="el-icon-chat-dot-round"></i>
               微信：<a href="javascript:;"> * valarchie</a>
             </p>
             <p>
               <i class="el-icon-money"></i>
-               QQ：<a href="javascript:;" > * 343928303</a>
+              QQ：<a href="javascript:;"> * 343928303</a>
             </p>
           </div>
         </el-card>
@@ -182,11 +146,9 @@
             <img
               src="https://oscimg.oschina.net/oscnet/up-261828407c9089ad1cc0ce3f41a0ef3fbc0.png"
               alt="donate"
-              style="width:100%"
+              style="width: 100%"
             />
-            <span style="display: inline-block; height: 30px; line-height: 30px"
-              >你可以请作者喝杯咖啡表示鼓励</span
-            >
+            <span style="display: inline-block; height: 30px; line-height: 30px">你可以请作者喝杯咖啡表示鼓励</span>
           </div>
         </el-card>
       </el-col>
@@ -195,7 +157,7 @@
 </template>
 
 <script setup name="Index">
-const version = ref('1.0.0');
+const version = ref('1.5.0');
 
 function goTarget(url) {
   window.open(url, '__blank');
@@ -225,7 +187,7 @@ function goTarget(url) {
     margin: 0;
   }
 
-  font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'open sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 13px;
   color: #676a6c;
   overflow-x: hidden;
