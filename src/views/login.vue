@@ -55,7 +55,7 @@
 <script setup>
 import Cookies from 'js-cookie';
 import { getCodeImg } from '@/api/login';
-import { encrypt, decrypt } from '@/utils/jsencrypt';
+import { encrypt, decrypt } from '@/utils/rsaUtil';
 
 const store = useStore();
 const router = useRouter();

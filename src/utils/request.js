@@ -4,7 +4,8 @@ import { saveAs } from 'file-saver';
 import store from '@/store';
 import { getToken } from '@/utils/token';
 import errorCode from '@/utils/errorCode';
-import { encodeURIParams, blobValidate } from '@/utils/common';
+import { isBlobData } from '@/utils/common';
+import { encodeURIParams } from '@/utils/strUtil';
 import cache from '@/plugins/cache';
 
 let downloadLoadingInstance;
@@ -142,7 +143,7 @@ export function download(url, params, filename) {
       responseType: 'blob',
     })
     .then(async (data) => {
-      const isLogin = await blobValidate(data);
+      const isLogin = await isBlobData(data);
       if (isLogin) {
         const blob = new Blob([data]);
         saveAs(blob, filename);

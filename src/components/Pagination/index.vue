@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'hidden': hidden }" class="pagination-container">
+  <div :class="{ hidden: hidden }" class="pagination-container">
     <el-pagination
       :background="background"
       v-model:current-page="currentPage"
@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import { scrollTo } from '@/utils/scroll-to';
+import { scrollTo } from '@/utils/scrollUtil';
 
 const props = defineProps({
   total: {
@@ -91,7 +91,6 @@ function handleCurrentChange(val) {
     scrollTo(0, 800);
   }
 }
-
 </script>
 
 <style scoped>

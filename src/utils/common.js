@@ -1,52 +1,41 @@
+import store from '@/store';
+import defaultSettings from '@/config/defaultSettings';
 /**
  * 通用js方法封装处理
  * Copyright (c) 2019 ruoyi
  */
 
-// 日期格式化
-export function parseTime(time, pattern) {
-  if (arguments.length === 0 || !time) {
-    return null;
-  }
-  const format = pattern || '{y}-{m}-{d} {h}:{i}:{s}';
-  let date;
-  if (typeof time === 'object') {
-    date = time;
+/**
+ * 动态修改标题
+ */
+export function useDynamicTitle() {
+  if (store.state.settings.dynamicTitle) {
+    document.title = `${store.state.settings.title} - ${defaultSettings.title}`;
   } else {
-    if (typeof time === 'string' && /^[0-9]+$/.test(time)) {
-      time = parseInt(time);
-    } else if (typeof time === 'string') {
-      time = time
-        .replace(new RegExp(/-/gm), '/')
-        .replace('T', ' ')
-        .replace(new RegExp(/\.[\d]{3}/gm), '');
-    }
-    if (typeof time === 'number' && time.toString().length === 10) {
-      time *= 1000;
-    }
-    date = new Date(time);
+    document.title = defaultSettings.title;
   }
-  const formatObj = {
-    y: date.getFullYear(),
-    m: date.getMonth() + 1,
-    d: date.getDate(),
-    h: date.getHours(),
-    i: date.getMinutes(),
-    s: date.getSeconds(),
-    a: date.getDay(),
-  };
-  const timeStr = format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
-    let value = formatObj[key];
-    // Note: getDay() returns 0 on Sunday
-    if (key === 'a') {
-      return ['日', '一', '二', '三', '四', '五', '六'][value];
+}
+
+/**
+ * @param {Array} actual
+ * @returns {Array}
+ */
+export function trimArray(actual) {
+  const newArray = [];
+  for (let i = 0; i < actual.length; i++) {
+    if (actual[i]) {
+      newArray.push(actual[i]);
     }
-    if (result.length > 0 && value < 10) {
-      value = `0${value}`;
-    }
-    return value || 0;
-  });
-  return timeStr;
+  }
+  return newArray;
+}
+
+/**
+ * @param {Array} arr
+ * @returns {Array}
+ */
+export function arrayToSet(arr) {
+  return Array.from(new Set(arr));
 }
 
 // 表单重置
@@ -62,47 +51,6 @@ export function addTimeRange(params, dateRange) {
   params.beginTime = beginTime;
   params.endTime = endTime;
   return params;
-}
-
-// 回显数据字典
-export function selectDictLabel(dicts, value) {
-  if (value === undefined) {
-    return '';
-  }
-  const actions = [];
-  Object.keys(dicts).some((key) => {
-    if (dicts[key].value === `${value}`) {
-      actions.push(dicts[key].label);
-      return true;
-    }
-  });
-  if (actions.length === 0) {
-    actions.push(value);
-  }
-  return actions.join('');
-}
-
-// 回显数据字典（字符串数组）
-export function selectDictLabels(datas, value, separator) {
-  if (value === undefined) {
-    return '';
-  }
-  const actions = [];
-  const currentSeparator = undefined === separator ? ',' : separator;
-  const temp = value.split(currentSeparator);
-  Object.keys(value.split(currentSeparator)).some((val) => {
-    let match = false;
-    Object.keys(datas).some((key) => {
-      if (datas[key].value == `${temp[val]}`) {
-        actions.push(datas[key].label + currentSeparator);
-        match = true;
-      }
-    });
-    if (!match) {
-      actions.push(temp[val] + currentSeparator);
-    }
-  });
-  return actions.join('').substring(0, actions.join('').length - 1);
 }
 
 // 转换字符串，undefined,null等转化为""
@@ -127,6 +75,52 @@ export function mergeRecursive(source, target) {
     }
   }
   return source;
+}
+
+/**
+ * Merges two objects, giving the last one precedence
+ * @param {Object} target
+ * @param {(Object|Array)} source
+ * @returns {Object}
+ */
+export function objectMerge(target, source) {
+  if (typeof target !== 'object') {
+    target = {};
+  }
+  if (Array.isArray(source)) {
+    return source.slice();
+  }
+  Object.keys(source).forEach((property) => {
+    const sourceProperty = source[property];
+    if (typeof sourceProperty === 'object') {
+      target[property] = objectMerge(target[property], sourceProperty);
+    } else {
+      target[property] = sourceProperty;
+    }
+  });
+  return target;
+}
+
+/**
+ * This is just a simple version of deep copy
+ * Has a lot of edge cases bug
+ * If you want to use a perfect deep copy, use lodash's _.cloneDeep
+ * @param {Object} source
+ * @returns {Object}
+ */
+export function deepClone(source) {
+  if (!source && typeof source !== 'object') {
+    throw new Error('error arguments', 'deepClone');
+  }
+  const targetObj = source.constructor === Array ? [] : {};
+  Object.keys(source).forEach((keys) => {
+    if (source[keys] && typeof source[keys] === 'object') {
+      targetObj[keys] = deepClone(source[keys]);
+    } else {
+      targetObj[keys] = source[keys];
+    }
+  });
+  return targetObj;
 }
 
 /**
@@ -180,32 +174,6 @@ export function handleTree(data, id, parentId, children) {
   return tree;
 }
 
-/**
- * 参数处理
- * @param {*} params  参数
- */
-export function encodeURIParams(params) {
-  let result = '';
-  for (const propName of Object.keys(params)) {
-    const value = params[propName];
-    const part = `${encodeURIComponent(propName)}=`;
-    if (value !== null && typeof value !== 'undefined') {
-      if (typeof value === 'object') {
-        for (const key of Object.keys(value)) {
-          if (value[key] !== null && typeof value[key] !== 'undefined') {
-            const params = `${propName}[${key}]`;
-            const subPart = `${encodeURIComponent(params)}=`;
-            result += `${subPart + encodeURIComponent(value[key])}&`;
-          }
-        }
-      } else {
-        result += `${part + encodeURIComponent(value)}&`;
-      }
-    }
-  }
-  return result;
-}
-
 // 返回项目路径
 export function getNormalPath(p) {
   if (p.length === 0 || !p || p === undefined) {
@@ -219,7 +187,7 @@ export function getNormalPath(p) {
 }
 
 // 验证是否为blob格式
-export async function blobValidate(data) {
+export async function isBlobData(data) {
   try {
     const text = await data.text();
     JSON.parse(text);

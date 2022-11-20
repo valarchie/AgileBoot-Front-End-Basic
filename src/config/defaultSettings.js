@@ -9,7 +9,7 @@ export default {
    * 侧边栏主题 深色主题theme-dark，浅色主题theme-light
    * src\assets\styles\sidebar.scss 具体配置
    */
-  sideTheme: 'theme-dark',
+  sideTheme: 'theme-light',
 
   /**
    * 是否系统布局配置

@@ -23,8 +23,9 @@ import elementIcons from '@/components/SvgIcon/svgicon';
 
 import './router/interceptor'; // permission control
 
-import { useDict } from '@/utils/dict';
-import { parseTime, resetForm, addTimeRange, handleTree, selectDictLabel } from '@/utils/common';
+import { resetForm, addTimeRange, handleTree } from '@/utils/common';
+import { useDict, selectDictLabel } from '@/utils/dict';
+import { parseTime } from '@/utils/dateUtil';
 
 // 分页组件
 import Pagination from '@/components/Pagination';
