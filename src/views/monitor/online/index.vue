@@ -38,6 +38,7 @@
         <template #default="scope">
           <el-button
             link
+            type="primary"
             icon="Delete"
             @click="handleForceLogout(scope.row)"
             v-hasPermission="['monitor:online:forceLogout']"

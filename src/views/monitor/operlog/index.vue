@@ -123,6 +123,7 @@
         <template #default="scope">
           <el-button
             link
+            type="primary"
             icon="View"
             @click="handleView(scope.row, scope.index)"
             v-hasPermission="['system:operlog:query']"

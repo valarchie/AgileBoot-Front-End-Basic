@@ -49,15 +49,21 @@
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
-          <el-button link icon="Edit" @click="handleUpdate(scope.row)" v-hasPermission="['system:dept:edit']"
+          <el-button
+            link
+            type="primary"
+            icon="Edit"
+            @click="handleUpdate(scope.row)"
+            v-hasPermission="['system:dept:edit']"
             >修改</el-button
           >
-          <el-button link icon="Plus" @click="handleAdd(scope.row)" v-hasPermission="['system:dept:add']"
+          <el-button link type="primary" icon="Plus" @click="handleAdd(scope.row)" v-hasPermission="['system:dept:add']"
             >新增</el-button
           >
           <el-button
             v-if="scope.row.parentId != 0"
             link
+            type="primary"
             icon="Delete"
             @click="handleDelete(scope.row)"
             v-hasPermission="['system:dept:remove']"

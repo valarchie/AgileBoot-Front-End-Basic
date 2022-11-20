@@ -71,10 +71,20 @@
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
-          <el-button link icon="Edit" @click="handleUpdate(scope.row)" v-hasPermission="['system:notice:edit']"
+          <el-button
+            link
+            type="primary"
+            icon="Edit"
+            @click="handleUpdate(scope.row)"
+            v-hasPermission="['system:notice:edit']"
             >修改</el-button
           >
-          <el-button link icon="Delete" @click="handleDelete(scope.row)" v-hasPermission="['system:notice:remove']"
+          <el-button
+            link
+            type="primary"
+            icon="Delete"
+            @click="handleDelete(scope.row)"
+            v-hasPermission="['system:notice:remove']"
             >删除</el-button
           >
         </template>

@@ -102,6 +102,7 @@
           <el-tooltip content="修改" placement="top" v-if="scope.row.roleId !== 1">
             <el-button
               link
+              type="primary"
               icon="Edit"
               @click="handleUpdate(scope.row)"
               v-hasPermission="['system:role:edit']"
@@ -110,6 +111,7 @@
           <el-tooltip content="删除" placement="top" v-if="scope.row.roleId !== 1">
             <el-button
               link
+              type="primary"
               icon="Delete"
               @click="handleDelete(scope.row)"
               v-hasPermission="['system:role:remove']"
@@ -118,6 +120,7 @@
           <el-tooltip content="数据权限" placement="top" v-if="scope.row.roleId !== 1">
             <el-button
               link
+              type="primary"
               icon="CircleCheck"
               @click="handleDataScope(scope.row)"
               v-hasPermission="['system:role:edit']"
@@ -126,6 +129,7 @@
           <el-tooltip content="分配用户" placement="top" v-if="scope.row.roleId !== 1">
             <el-button
               link
+              type="primary"
               icon="User"
               @click="handleAuthUser(scope.row)"
               v-hasPermission="['system:role:edit']"

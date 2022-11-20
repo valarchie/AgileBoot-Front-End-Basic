@@ -81,7 +81,12 @@
       </el-table-column>
       <el-table-column label="操作" align="center" width="150" class-name="small-padding fixed-width">
         <template #default="scope">
-          <el-button link icon="Edit" @click="handleUpdate(scope.row)" v-hasPermission="['system:config:edit']"
+          <el-button
+            link
+            type="primary"
+            icon="Edit"
+            @click="handleUpdate(scope.row)"
+            v-hasPermission="['system:config:edit']"
             >修改</el-button
           >
         </template>
