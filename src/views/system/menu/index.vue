@@ -17,7 +17,9 @@
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:menu:add']">新增</el-button>
+        <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermission="['system:menu:add']"
+          >新增</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button type="info" plain icon="Sort" @click="toggleExpandAll">展开/折叠</el-button>
@@ -31,7 +33,7 @@
       :data="menuList"
       row-key="menuId"
       :default-expand-all="isExpandAll"
-      :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+      :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
     >
       <el-table-column prop="menuName" label="菜单名称" :show-overflow-tooltip="true" width="160"></el-table-column>
       <el-table-column prop="icon" label="图标" align="center" width="100">
@@ -54,13 +56,13 @@
       </el-table-column>
       <el-table-column label="操作" align="center" width="200" class-name="small-padding fixed-width">
         <template #default="scope">
-          <el-button type="text" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['system:menu:edit']"
+          <el-button link icon="Edit" @click="handleUpdate(scope.row)" v-hasPermission="['system:menu:edit']"
             >修改</el-button
           >
-          <el-button type="text" icon="Plus" @click="handleAdd(scope.row)" v-hasPermi="['system:menu:add']"
+          <el-button link icon="Plus" @click="handleAdd(scope.row)" v-hasPermission="['system:menu:add']"
             >新增</el-button
           >
-          <el-button type="text" icon="Delete" @click="handleDelete(scope.row)" v-hasPermi="['system:menu:remove']"
+          <el-button link icon="Delete" @click="handleDelete(scope.row)" v-hasPermission="['system:menu:remove']"
             >删除</el-button
           >
         </template>
@@ -76,7 +78,7 @@
               <el-tree-select
                 v-model="form.parentId"
                 :data="menuOptions"
-                :props="{value: 'menuId', label: 'menuName', children: 'children'}"
+                :props="{ value: 'menuId', label: 'menuName', children: 'children' }"
                 value-key="menuId"
                 placeholder="选择上级菜单"
                 check-strictly
@@ -178,7 +180,7 @@
               <template #label>
                 <span>
                   <el-tooltip
-                    content="控制器中定义的权限字符，如：@PreAuthorize(`@ss.hasPermi('system:user:list')`)"
+                    content="控制器中定义的权限字符，如：@PreAuthorize(`@permission.has('system:config:list')`)"
                     placement="top"
                   >
                     <el-icon><question-filled /></el-icon>
@@ -263,12 +265,12 @@
 </template>
 
 <script setup name="Menu">
-import {addMenu, deleteMenu, getMenu, listMenu, updateMenu} from '@/api/system/menu';
+import { addMenu, deleteMenu, getMenu, listMenu, updateMenu } from '@/api/system/menu';
 import SvgIcon from '@/components/SvgIcon';
 import IconSelect from '@/components/IconSelect';
 
-const {proxy} = getCurrentInstance();
-const {sys_visible, sys_status} = proxy.useDict('sys_visible', 'sys_status');
+const { proxy } = getCurrentInstance();
+const { sys_visible, sys_status } = proxy.useDict('sys_visible', 'sys_status');
 
 const menuList = ref([]);
 const open = ref(false);
@@ -288,13 +290,13 @@ const data = reactive({
     isVisible: undefined,
   },
   rules: {
-    menuName: [{required: true, message: '菜单名称不能为空', trigger: 'blur'}],
-    orderNum: [{required: true, message: '菜单顺序不能为空', trigger: 'blur'}],
-    path: [{required: true, message: '路由地址不能为空', trigger: 'blur'}],
+    menuName: [{ required: true, message: '菜单名称不能为空', trigger: 'blur' }],
+    orderNum: [{ required: true, message: '菜单顺序不能为空', trigger: 'blur' }],
+    path: [{ required: true, message: '路由地址不能为空', trigger: 'blur' }],
   },
 });
 
-const {queryParams, form, rules} = toRefs(data);
+const { queryParams, form, rules } = toRefs(data);
 
 /** 查询菜单列表 */
 function getList() {
@@ -311,7 +313,7 @@ function getList() {
 function getTreeSelect() {
   menuOptions.value = [];
   listMenu().then((response) => {
-    const menu = {menuId: 0, menuName: '主类目', children: []};
+    const menu = { menuId: 0, menuName: '主类目', children: [] };
     menu.children = proxy.handleTree(response, 'menuId');
     menuOptions.value.push(menu);
   });

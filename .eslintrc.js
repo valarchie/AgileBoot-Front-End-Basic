@@ -11,17 +11,32 @@ module.exports = {
       },
     },
   },
-  extends: ['plugin:vue/vue3-essential', 'airbnb-base', 'prettier'],
+  // 配置这些自动引入的库  避免vscode报红
+  extends: [
+    'plugin:vue/vue3-essential',
+    'airbnb-base',
+    'prettier',
+    // collections
+    'vue-global-api/reactivity',
+    'vue-global-api/lifecycle',
+    'vue-global-api/component',
+    // single apis
+    'vue-global-api/ref',
+    'vue-global-api/toRef',
+  ],
+  extends: [],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
   plugins: ['vue'],
+  // ESLint 是一个语法规则和代码风格的检查工具,可以用来保证写出语法正确、风格统一的代码。
   rules: {
     'import/no-cycle': 0,
     'import/prefer-default-export': 0,
     'import/order': 0,
     'no-lonely-if': 0,
+    'no-undef': 1,
     'no-unused-expressions': 0,
     'vue/multi-word-component-names': [
       'error',

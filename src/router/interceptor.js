@@ -1,11 +1,11 @@
 import { ElMessage } from 'element-plus';
 import NProgress from 'nprogress';
-import router from './router';
-import store from './store';
+import router from '.';
+import store from '../store';
 import 'nprogress/nprogress.css';
-import { getToken } from '@/utils/auth';
+import { getToken } from '@/utils/token';
 import { isHttp } from '@/utils/validate';
-import { isRelogin } from '@/utils/request';
+import { isReLogin } from '@/utils/request';
 
 NProgress.configure({ showSpinner: false });
 
@@ -22,26 +22,29 @@ router.beforeEach((to, from, next) => {
       next({ path: '/' });
       NProgress.done();
     } else if (!store.getters.role) {
-      console.log("重复获取")
-      isRelogin.show = true;
+      console.log('重复获取');
+      isReLogin.show = true;
       // 判断当前用户是否已拉取完user_info信息
-      store.dispatch('GetInfo').then(() => {
-        isRelogin.show = false;
-        store.dispatch('GenerateRoutes').then((accessRoutes) => {
-          // 根据roles权限生成可访问的路由表
-          accessRoutes.forEach((route) => {
-            if (!isHttp(route.path)) {
-              router.addRoute(route); // 动态添加可访问路由表
-            }
+      store
+        .dispatch('GetInfo')
+        .then(() => {
+          isReLogin.show = false;
+          store.dispatch('GenerateRoutes').then((accessRoutes) => {
+            // 根据roles权限生成可访问的路由表
+            accessRoutes.forEach((route) => {
+              if (!isHttp(route.path)) {
+                router.addRoute(route); // 动态添加可访问路由表
+              }
+            });
+            next({ ...to, replace: true }); // hack方法 确保addRoutes已完成
           });
-          next({ ...to, replace: true }); // hack方法 确保addRoutes已完成
+        })
+        .catch((err) => {
+          store.dispatch('LogOut').then(() => {
+            ElMessage.error(err);
+            next({ path: '/' });
+          });
         });
-      }).catch((err) => {
-        store.dispatch('LogOut').then(() => {
-          ElMessage.error(err);
-          next({ path: '/' });
-        });
-      });
     } else {
       next();
     }

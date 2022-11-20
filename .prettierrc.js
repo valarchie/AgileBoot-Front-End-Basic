@@ -1,3 +1,4 @@
+// 代码格式化
 module.exports = {
   printWidth: 120,
   tabWidth: 2,

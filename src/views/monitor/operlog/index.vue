@@ -53,17 +53,22 @@
           icon="Delete"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['system:operlog:remove']"
+          v-hasPermission="['system:operlog:remove']"
           >删除</el-button
         >
       </el-col>
       <el-col :span="1.5">
-        <el-button type="danger" plain icon="Delete" @click="handleClean" v-hasPermi="['system:operlog:remove']"
+        <el-button type="danger" plain icon="Delete" @click="handleClean" v-hasPermission="['system:operlog:remove']"
           >清空</el-button
         >
       </el-col>
       <el-col :span="1.5">
-        <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:operlog:export']"
+        <el-button
+          type="warning"
+          plain
+          icon="Download"
+          @click="handleExport"
+          v-hasPermission="['system:operlog:export']"
           >导出</el-button
         >
       </el-col>
@@ -117,10 +122,10 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
           <el-button
-            type="text"
+            link
             icon="View"
             @click="handleView(scope.row, scope.index)"
-            v-hasPermi="['system:operlog:query']"
+            v-hasPermission="['system:operlog:query']"
             >详细
           </el-button>
         </template>
@@ -181,10 +186,10 @@
 </template>
 
 <script setup name="Operlog">
-import {list, deleteOperationLog, cleanOperlog} from '@/api/monitor/operlog';
+import { list, deleteOperationLog, cleanOperlog } from '@/api/monitor/operlog';
 
-const {proxy} = getCurrentInstance();
-const {sys_operation_type, sys_operation_status} = proxy.useDict('sys_operation_type', 'sys_operation_status');
+const { proxy } = getCurrentInstance();
+const { sys_operation_type, sys_operation_status } = proxy.useDict('sys_operation_type', 'sys_operation_status');
 
 const operlogList = ref([]);
 const open = ref(false);
@@ -196,7 +201,7 @@ const multiple = ref(true);
 const total = ref(0);
 const requestModule = ref('');
 const dateRange = ref([]);
-const defaultSort = ref({prop: 'operationTime', order: 'descending'});
+const defaultSort = ref({ prop: 'operationTime', order: 'descending' });
 
 const data = reactive({
   form: {},
@@ -210,7 +215,7 @@ const data = reactive({
   },
 });
 
-const {queryParams, form} = toRefs(data);
+const { queryParams, form } = toRefs(data);
 
 /** 查询登录日志 */
 function getList() {

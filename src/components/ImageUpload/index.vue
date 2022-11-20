@@ -26,27 +26,19 @@
         大小不超过 <b style="color: #f56c6c">{{ fileSize }}MB</b>
       </template>
       <template v-if="fileType">
-        格式为 <b style="color: #f56c6c">{{ fileType.join("/") }}</b>
+        格式为 <b style="color: #f56c6c">{{ fileType.join('/') }}</b>
       </template>
       的文件
     </div>
 
-    <el-dialog
-      v-model="dialogVisible"
-      title="预览"
-      width="800px"
-      append-to-body
-    >
-      <img
-        :src="dialogImageUrl"
-        style="display: block; max-width: 100%; margin: 0 auto"
-      />
+    <el-dialog v-model="dialogVisible" title="预览" width="800px" append-to-body>
+      <img :src="dialogImageUrl" style="display: block; max-width: 100%; margin: 0 auto" />
     </el-dialog>
   </div>
 </template>
 
 <script setup>
-import { getToken } from '@/utils/auth';
+import { getToken } from '@/utils/token';
 
 const props = defineProps({
   modelValue: [String, Object, Array],
@@ -82,30 +74,32 @@ const baseUrl = import.meta.env.VITE_APP_BASE_API;
 const uploadImgUrl = ref(`${import.meta.env.VITE_APP_BASE_API}/file/upload`); // 上传的图片服务器地址
 const headers = ref({ Authorization: `Bearer ${getToken()}` });
 const fileList = ref([]);
-const showTip = computed(
-  () => props.isShowTip && (props.fileType || props.fileSize),
-);
+const showTip = computed(() => props.isShowTip && (props.fileType || props.fileSize));
 
-watch(() => props.modelValue, (val) => {
-  if (val) {
-    // 首先将值转为数组
-    const list = Array.isArray(val) ? val : props.modelValue.split(',');
-    // 然后将数组转为对象数组
-    fileList.value = list.map((item) => {
-      if (typeof item === 'string') {
-        if (item.indexOf(baseUrl) === -1) {
-          item = { name: baseUrl + item, url: baseUrl + item };
-        } else {
-          item = { name: item, url: item };
+watch(
+  () => props.modelValue,
+  (val) => {
+    if (val) {
+      // 首先将值转为数组
+      const list = Array.isArray(val) ? val : props.modelValue.split(',');
+      // 然后将数组转为对象数组
+      fileList.value = list.map((item) => {
+        if (typeof item === 'string') {
+          if (item.indexOf(baseUrl) === -1) {
+            item = { name: baseUrl + item, url: baseUrl + item };
+          } else {
+            item = { name: item, url: item };
+          }
         }
-      }
-      return item;
-    });
-  } else {
-    fileList.value = [];
-    return [];
-  }
-}, { deep: true, immediate: true });
+        return item;
+      });
+    } else {
+      fileList.value = [];
+      return [];
+    }
+  },
+  { deep: true, immediate: true },
+);
 
 // 删除图片
 function handleRemove(file, files) {
@@ -141,9 +135,7 @@ function handleBeforeUpload(file) {
     isImg = file.type.indexOf('image') > -1;
   }
   if (!isImg) {
-    proxy.$modal.msgError(
-      `文件格式不正确, 请上传${props.fileType.join('/')}图片格式文件!`,
-    );
+    proxy.$modal.msgError(`文件格式不正确, 请上传${props.fileType.join('/')}图片格式文件!`);
     return false;
   }
   if (props.fileSize) {

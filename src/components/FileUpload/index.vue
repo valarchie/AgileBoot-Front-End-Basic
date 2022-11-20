@@ -20,8 +20,12 @@
     <!-- 上传提示 -->
     <div class="el-upload__tip" v-if="showTip">
       请上传
-      <template v-if="fileSize"> 大小不超过 <b style="color: #f56c6c">{{ fileSize }}MB</b> </template>
-      <template v-if="fileType"> 格式为 <b style="color: #f56c6c">{{ fileType.join("/") }}</b> </template>
+      <template v-if="fileSize">
+        大小不超过 <b style="color: #f56c6c">{{ fileSize }}MB</b>
+      </template>
+      <template v-if="fileType">
+        格式为 <b style="color: #f56c6c">{{ fileType.join('/') }}</b>
+      </template>
       的文件
     </div>
     <!-- 文件列表 -->
@@ -39,7 +43,7 @@
 </template>
 
 <script setup>
-import { getToken } from '@/utils/auth';
+import { getToken } from '@/utils/token';
 
 const props = defineProps({
   modelValue: [String, Object, Array],
@@ -73,28 +77,30 @@ const baseUrl = import.meta.env.VITE_APP_BASE_API;
 const uploadFileUrl = ref(`${import.meta.env.VITE_APP_BASE_API}/file/upload`); // 上传的图片服务器地址
 const headers = ref({ Authorization: `Bearer ${getToken()}` });
 const fileList = ref([]);
-const showTip = computed(
-  () => props.isShowTip && (props.fileType || props.fileSize),
-);
+const showTip = computed(() => props.isShowTip && (props.fileType || props.fileSize));
 
-watch(() => props.modelValue, (val) => {
-  if (val) {
-    let temp = 1;
-    // 首先将值转为数组
-    const list = Array.isArray(val) ? val : props.modelValue.split(',');
-    // 然后将数组转为对象数组
-    fileList.value = list.map((item) => {
-      if (typeof item === 'string') {
-        item = { name: item, url: item };
-      }
-      item.uid = item.uid || new Date().getTime() + temp++;
-      return item;
-    });
-  } else {
-    fileList.value = [];
-    return [];
-  }
-}, { deep: true, immediate: true });
+watch(
+  () => props.modelValue,
+  (val) => {
+    if (val) {
+      let temp = 1;
+      // 首先将值转为数组
+      const list = Array.isArray(val) ? val : props.modelValue.split(',');
+      // 然后将数组转为对象数组
+      fileList.value = list.map((item) => {
+        if (typeof item === 'string') {
+          item = { name: item, url: item };
+        }
+        item.uid = item.uid || new Date().getTime() + temp++;
+        return item;
+      });
+    } else {
+      fileList.value = [];
+      return [];
+    }
+  },
+  { deep: true, immediate: true },
+);
 
 // 上传前校检格式和大小
 function handleBeforeUpload(file) {

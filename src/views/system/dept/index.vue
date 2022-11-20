@@ -17,7 +17,9 @@
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:dept:add']">新增</el-button>
+        <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermission="['system:dept:add']"
+          >新增</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button type="info" plain icon="Sort" @click="toggleExpandAll">展开/折叠</el-button>
@@ -31,7 +33,7 @@
       :data="deptList"
       row-key="deptId"
       :default-expand-all="isExpandAll"
-      :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+      :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
     >
       <el-table-column prop="deptName" label="部门名称" width="260"></el-table-column>
       <el-table-column prop="orderNum" label="排序" width="200"></el-table-column>
@@ -47,18 +49,18 @@
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
-          <el-button type="text" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['system:dept:edit']"
+          <el-button link icon="Edit" @click="handleUpdate(scope.row)" v-hasPermission="['system:dept:edit']"
             >修改</el-button
           >
-          <el-button type="text" icon="Plus" @click="handleAdd(scope.row)" v-hasPermi="['system:dept:add']"
+          <el-button link icon="Plus" @click="handleAdd(scope.row)" v-hasPermission="['system:dept:add']"
             >新增</el-button
           >
           <el-button
             v-if="scope.row.parentId != 0"
-            type="text"
+            link
             icon="Delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['system:dept:remove']"
+            v-hasPermission="['system:dept:remove']"
             >删除</el-button
           >
         </template>
@@ -74,7 +76,7 @@
               <el-tree-select
                 v-model="form.parentId"
                 :data="deptOptions"
-                :props="{value: 'deptId', label: 'deptName', children: 'children'}"
+                :props="{ value: 'deptId', label: 'deptName', children: 'children' }"
                 value-key="deptId"
                 placeholder="选择上级部门"
                 check-strictly
@@ -126,10 +128,17 @@
 </template>
 
 <script setup name="Dept">
-import {listDept, getDept, deleteDept, addDept, updateDept, listDeptExcludeCurrentDeptItself} from '@/api/system/dept';
+import {
+  listDept,
+  getDept,
+  deleteDept,
+  addDept,
+  updateDept,
+  listDeptExcludeCurrentDeptItself,
+} from '@/api/system/dept';
 
-const {proxy} = getCurrentInstance();
-const {sys_status} = proxy.useDict('sys_status');
+const { proxy } = getCurrentInstance();
+const { sys_status } = proxy.useDict('sys_status');
 
 const deptList = ref([]);
 const open = ref(false);
@@ -147,15 +156,15 @@ const data = reactive({
     status: undefined,
   },
   rules: {
-    parentId: [{required: true, message: '上级部门不能为空', trigger: 'blur'}],
-    deptName: [{required: true, message: '部门名称不能为空', trigger: 'blur'}],
-    orderNum: [{required: true, message: '显示排序不能为空', trigger: 'blur'}],
-    email: [{type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change']}],
-    phone: [{pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/, message: '请输入正确的手机号码', trigger: 'blur'}],
+    parentId: [{ required: true, message: '上级部门不能为空', trigger: 'blur' }],
+    deptName: [{ required: true, message: '部门名称不能为空', trigger: 'blur' }],
+    orderNum: [{ required: true, message: '显示排序不能为空', trigger: 'blur' }],
+    email: [{ type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }],
+    phone: [{ pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/, message: '请输入正确的手机号码', trigger: 'blur' }],
   },
 });
 
-const {queryParams, form, rules} = toRefs(data);
+const { queryParams, form, rules } = toRefs(data);
 
 /** 查询部门列表 */
 function getList() {

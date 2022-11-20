@@ -15,7 +15,7 @@
         <div class="head-container">
           <el-tree
             :data="deptOptions"
-            :props="{label: 'label', children: 'children'}"
+            :props="{ label: 'label', children: 'children' }"
             :expand-on-click-node="false"
             :filter-node-method="filterNode"
             ref="deptTreeRef"
@@ -69,7 +69,7 @@
 
         <el-row :gutter="10" class="mb8">
           <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:user:add']"
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermission="['system:user:add']"
               >新增</el-button
             >
           </el-col>
@@ -80,7 +80,7 @@
               icon="Edit"
               :disabled="single"
               @click="handleUpdate"
-              v-hasPermi="['system:user:edit']"
+              v-hasPermission="['system:user:edit']"
               >修改</el-button
             >
           </el-col>
@@ -91,17 +91,22 @@
               icon="Delete"
               :disabled="multiple"
               @click="handleDelete"
-              v-hasPermi="['system:user:remove']"
+              v-hasPermission="['system:user:remove']"
               >删除</el-button
             >
           </el-col>
           <el-col :span="1.5">
-            <el-button type="info" plain icon="Upload" @click="handleImport" v-hasPermi="['system:user:import']"
+            <el-button type="info" plain icon="Upload" @click="handleImport" v-hasPermission="['system:user:import']"
               >导入</el-button
             >
           </el-col>
           <el-col :span="1.5">
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:user:export']"
+            <el-button
+              type="warning"
+              plain
+              icon="Download"
+              @click="handleExport"
+              v-hasPermission="['system:user:export']"
               >导出</el-button
             >
           </el-col>
@@ -162,34 +167,34 @@
             <template #default="scope">
               <el-tooltip content="修改" placement="top" v-if="scope.row.userId !== 1">
                 <el-button
-                  type="text"
+                  link
                   icon="Edit"
                   @click="handleUpdate(scope.row)"
-                  v-hasPermi="['system:user:edit']"
+                  v-hasPermission="['system:user:edit']"
                 ></el-button>
               </el-tooltip>
               <el-tooltip content="删除" placement="top" v-if="scope.row.userId !== 1">
                 <el-button
-                  type="text"
+                  link
                   icon="Delete"
                   @click="handleDelete(scope.row)"
-                  v-hasPermi="['system:user:remove']"
+                  v-hasPermission="['system:user:remove']"
                 ></el-button>
               </el-tooltip>
               <el-tooltip content="重置密码" placement="top" v-if="scope.row.userId !== 1">
                 <el-button
-                  type="text"
+                  link
                   icon="Key"
                   @click="handleResetPwd(scope.row)"
-                  v-hasPermi="['system:user:resetPwd']"
+                  v-hasPermission="['system:user:resetPwd']"
                 ></el-button>
               </el-tooltip>
               <el-tooltip content="分配角色" placement="top" v-if="scope.row.userId !== 1">
                 <el-button
-                  type="text"
+                  link
                   icon="CircleCheck"
                   @click="handleAuthRole(scope.row)"
-                  v-hasPermi="['system:user:edit']"
+                  v-hasPermission="['system:user:edit']"
                 ></el-button>
               </el-tooltip>
             </template>
@@ -219,7 +224,7 @@
               <el-tree-select
                 v-model="form.deptId"
                 :data="deptOptions"
-                :props="{value: 'id', label: 'label', children: 'children'}"
+                :props="{ value: 'id', label: 'label', children: 'children' }"
                 value-key="id"
                 placeholder="请选择归属部门"
                 check-strictly
@@ -363,13 +368,13 @@
 </template>
 
 <script setup name="User">
-import {getToken} from '@/utils/auth';
-import {getDeptSelectTree} from '@/api/system/dept';
-import {changeUserStatus, listUser, resetUserPwd, delUser, getUser, updateUser, addUser} from '@/api/system/user';
+import { getToken } from '@/utils/token';
+import { getDeptSelectTree } from '@/api/system/dept';
+import { changeUserStatus, listUser, resetUserPwd, delUser, getUser, updateUser, addUser } from '@/api/system/user';
 
 const router = useRouter();
-const {proxy} = getCurrentInstance();
-const {sys_status, sys_user_sex} = proxy.useDict('sys_status', 'sys_user_sex');
+const { proxy } = getCurrentInstance();
+const { sys_status, sys_user_sex } = proxy.useDict('sys_status', 'sys_user_sex');
 
 const userList = ref([]);
 const open = ref(false);
@@ -397,19 +402,19 @@ const upload = reactive({
   // 是否更新已经存在的用户数据
   updateSupport: 0,
   // 设置上传的请求头部
-  headers: {Authorization: `Bearer ${getToken()}`},
+  headers: { Authorization: `Bearer ${getToken()}` },
   // 上传的地址
   url: `${import.meta.env.VITE_APP_BASE_API}/system/user/importData`,
 });
 // 列显隐信息
 const columns = ref([
-  {key: 0, label: '用户编号', visible: true},
-  {key: 1, label: '用户名称', visible: true},
-  {key: 2, label: '用户昵称', visible: true},
-  {key: 3, label: '部门', visible: true},
-  {key: 4, label: '手机号码', visible: true},
-  {key: 5, label: '状态', visible: true},
-  {key: 6, label: '创建时间', visible: true},
+  { key: 0, label: '用户编号', visible: true },
+  { key: 1, label: '用户名称', visible: true },
+  { key: 2, label: '用户昵称', visible: true },
+  { key: 3, label: '部门', visible: true },
+  { key: 4, label: '手机号码', visible: true },
+  { key: 5, label: '状态', visible: true },
+  { key: 6, label: '创建时间', visible: true },
 ]);
 
 const data = reactive({
@@ -424,7 +429,7 @@ const data = reactive({
   },
   rules: {
     username: [
-      {required: true, message: '用户名称不能为空', trigger: 'blur'},
+      { required: true, message: '用户名称不能为空', trigger: 'blur' },
       {
         min: 2,
         max: 20,
@@ -432,9 +437,9 @@ const data = reactive({
         trigger: 'blur',
       },
     ],
-    nickName: [{required: true, message: '用户昵称不能为空', trigger: 'blur'}],
+    nickName: [{ required: true, message: '用户昵称不能为空', trigger: 'blur' }],
     password: [
-      {required: true, message: '用户密码不能为空', trigger: 'blur'},
+      { required: true, message: '用户密码不能为空', trigger: 'blur' },
       {
         min: 5,
         max: 20,
@@ -442,12 +447,12 @@ const data = reactive({
         trigger: 'blur',
       },
     ],
-    email: [{type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change']}],
-    phoneNumber: [{pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/, message: '请输入正确的手机号码', trigger: 'blur'}],
+    email: [{ type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }],
+    phoneNumber: [{ pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/, message: '请输入正确的手机号码', trigger: 'blur' }],
   },
 });
 
-const {queryParams, form, rules} = toRefs(data);
+const { queryParams, form, rules } = toRefs(data);
 
 /** 通过条件过滤节点  */
 const filterNode = (value, data) => {
@@ -542,7 +547,7 @@ function handleCommand(command, row) {
 }
 /** 跳转角色分配 */
 function handleAuthRole(row) {
-  const {userId} = row;
+  const { userId } = row;
   router.push(`/system/user-auth/role/${userId}`);
 }
 /** 重置密码按钮操作 */
@@ -555,7 +560,7 @@ function handleResetPwd(row) {
       inputPattern: /^.{5,20}$/,
       inputErrorMessage: '用户密码长度必须介于 5 和 20 之间',
     })
-    .then(({value}) => {
+    .then(({ value }) => {
       resetUserPwd(row.userId, value).then((response) => {
         proxy.$modal.msgSuccess(`修改成功，新密码是：${value}`);
       });
@@ -589,7 +594,7 @@ const handleFileSuccess = (response, file, fileList) => {
   proxy.$alert(
     `<div style='overflow: auto;overflow-x: hidden;max-height: 70vh;padding: 10px 20px 0;'>${response.msg}</div>`,
     '导入结果',
-    {dangerouslyUseHTMLString: true},
+    { dangerouslyUseHTMLString: true },
   );
   getList();
 };

@@ -26,13 +26,15 @@ export default {
   closeOpenPage(obj) {
     store.dispatch('tagsView/delView', router.currentRoute.value);
     if (obj !== undefined) {
-      return router.push(obj);
+      router.push(obj);
     }
   },
   // 关闭指定tab页签
   closePage(obj) {
     if (obj === undefined) {
-      return store.dispatch('tagsView/delView', router.currentRoute.value).then(({ lastPath }) => router.push(lastPath || '/index'));
+      return store
+        .dispatch('tagsView/delView', router.currentRoute.value)
+        .then(({ lastPath }) => router.push(lastPath || '/index'));
     }
     return store.dispatch('tagsView/delView', obj);
   },

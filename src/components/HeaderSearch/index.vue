@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'show': show }" class="header-search">
+  <div :class="{ show: show }" class="header-search">
     <svg-icon class-name="search-icon" icon-class="search" @click.stop="click" />
     <el-select
       ref="headerSearchSelectRef"
@@ -12,14 +12,19 @@
       class="header-search-select"
       @change="change"
     >
-      <el-option v-for="option in options" :key="option.item.path" :value="option.item" :label="option.item.title.join(' > ')" />
+      <el-option
+        v-for="option in options"
+        :key="option.item.path"
+        :value="option.item"
+        :label="option.item.title.join(' > ')"
+      />
     </el-select>
   </div>
 </template>
 
 <script setup>
 import Fuse from 'fuse.js';
-import { getNormalPath } from '@/utils/ruoyi';
+import { getNormalPath } from '@/utils/common';
 import { isHttp } from '@/utils/validate';
 
 const search = ref('');
@@ -67,13 +72,16 @@ function initFuse(list) {
     distance: 100,
     maxPatternLength: 32,
     minMatchCharLength: 1,
-    keys: [{
-      name: 'title',
-      weight: 0.7,
-    }, {
-      name: 'path',
-      weight: 0.3,
-    }],
+    keys: [
+      {
+        name: 'title',
+        weight: 0.7,
+      },
+      {
+        name: 'path',
+        weight: 0.3,
+      },
+    ],
   });
 }
 // Filter out the routes that can be displayed in the sidebar
@@ -83,7 +91,9 @@ function generateRoutes(routes, basePath = '', prefixTitle = []) {
 
   for (const r of routes) {
     // skip hidden router
-    if (r.hidden) { continue; }
+    if (r.hidden) {
+      continue;
+    }
     const p = r.path.length > 0 && r.path[0] === '/' ? r.path : `/${r.path}`;
     const data = {
       path: !isHttp(r.path) ? getNormalPath(basePath + p) : r.path,
@@ -139,7 +149,7 @@ watch(searchPool, (list) => {
 });
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .header-search {
   font-size: 0 !important;
 

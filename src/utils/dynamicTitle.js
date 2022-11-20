@@ -1,5 +1,5 @@
 import store from '@/store';
-import defaultSettings from '@/settings';
+import defaultSettings from '@/config/defaultSettings';
 
 /**
  * 动态修改标题

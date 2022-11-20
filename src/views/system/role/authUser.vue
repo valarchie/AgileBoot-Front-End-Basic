@@ -27,7 +27,7 @@
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button type="primary" plain icon="Plus" @click="openSelectUser" v-hasPermi="['system:role:add']"
+        <el-button type="primary" plain icon="Plus" @click="openSelectUser" v-hasPermission="['system:role:add']"
           >添加用户</el-button
         >
       </el-col>
@@ -38,7 +38,7 @@
           icon="CircleClose"
           :disabled="multiple"
           @click="cancelAuthUserAll"
-          v-hasPermi="['system:role:remove']"
+          v-hasPermission="['system:role:remove']"
           >批量取消授权</el-button
         >
       </el-col>
@@ -66,11 +66,7 @@
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
-          <el-button
-            type="text"
-            icon="CircleClose"
-            @click="cancelAuthUser(scope.row)"
-            v-hasPermi="['system:role:remove']"
+          <el-button link icon="CircleClose" @click="cancelAuthUser(scope.row)" v-hasPermission="['system:role:remove']"
             >取消授权</el-button
           >
         </template>
@@ -90,11 +86,11 @@
 
 <script setup name="AuthUser">
 import selectUser from './selectUser';
-import {allocatedUserList, deleteRoleOfUser, deleteRoleOfSomeUser} from '@/api/system/role';
+import { allocatedUserList, deleteRoleOfUser, deleteRoleOfSomeUser } from '@/api/system/role';
 
 const route = useRoute();
-const {proxy} = getCurrentInstance();
-const {sys_status} = proxy.useDict('sys_status');
+const { proxy } = getCurrentInstance();
+const { sys_status } = proxy.useDict('sys_status');
 
 const userList = ref([]);
 const loading = ref(true);
@@ -125,7 +121,7 @@ function getList() {
 }
 // 返回按钮
 function handleClose() {
-  const obj = {path: '/system/role'};
+  const obj = { path: '/system/role' };
   proxy.$tab.closeOpenPage(obj);
 }
 /** 搜索按钮操作 */
@@ -151,7 +147,7 @@ function openSelectUser() {
 function cancelAuthUser(row) {
   proxy.$modal
     .confirm(`确认要取消该用户"${row.username}"角色吗？`)
-    .then(() => deleteRoleOfSomeUser({userIds: row.userId}))
+    .then(() => deleteRoleOfSomeUser({ userIds: row.userId }))
     .then(() => {
       getList();
       proxy.$modal.msgSuccess('取消授权成功');
@@ -160,11 +156,11 @@ function cancelAuthUser(row) {
 }
 /** 批量取消授权按钮操作 */
 function cancelAuthUserAll(row) {
-  const {roleId} = queryParams;
+  const { roleId } = queryParams;
   const uIds = userIds.value.join(',');
   proxy.$modal
     .confirm('是否取消选中用户授权数据项?')
-    .then(() => deleteRoleOfSomeUser({roleId, userIds: uIds}))
+    .then(() => deleteRoleOfSomeUser({ roleId, userIds: uIds }))
     .then(() => {
       getList();
       proxy.$modal.msgSuccess('取消授权成功');

@@ -1,4 +1,4 @@
-import {createApp} from 'vue';
+import { createApp } from 'vue';
 
 import Cookies from 'js-cookie';
 
@@ -14,17 +14,17 @@ import directive from './directive'; // directive
 
 // 注册指令
 import plugins from './plugins'; // plugins
-import {download} from '@/utils/request';
+import { download } from '@/utils/request';
 
 // svg图标
 import 'virtual:svg-icons-register';
 import SvgIcon from '@/components/SvgIcon';
 import elementIcons from '@/components/SvgIcon/svgicon';
 
-import './permission'; // permission control
+import './router/interceptor'; // permission control
 
-import {useDict} from '@/utils/dict';
-import {parseTime, resetForm, addDateRange, addTimeRange, handleTree, selectDictLabel} from '@/utils/ruoyi';
+import { useDict } from '@/utils/dict';
+import { parseTime, resetForm, addTimeRange, handleTree, selectDictLabel } from '@/utils/common';
 
 // 分页组件
 import Pagination from '@/components/Pagination';
@@ -49,7 +49,6 @@ app.config.globalProperties.download = download;
 app.config.globalProperties.parseTime = parseTime;
 app.config.globalProperties.resetForm = resetForm;
 app.config.globalProperties.handleTree = handleTree;
-app.config.globalProperties.addDateRange = addDateRange;
 app.config.globalProperties.addTimeRange = addTimeRange;
 app.config.globalProperties.selectDictLabel = selectDictLabel;
 

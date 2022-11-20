@@ -1,7 +1,7 @@
 /**
-* v-copyText 复制文本内容
-* Copyright (c) 2022 ruoyi
-*/
+ * v-copyText 复制文本内容
+ * Copyright (c) 2022 ruoyi
+ */
 
 export default {
   beforeMount(el, { value, arg }) {
@@ -48,7 +48,7 @@ function copyTextToClipboard(input, { target = document.body } = {}) {
   let isSuccess = false;
   try {
     isSuccess = document.execCommand('copy');
-  } catch { }
+  } catch {}
 
   element.remove();
 

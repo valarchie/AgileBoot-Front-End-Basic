@@ -41,7 +41,9 @@
     </el-form>
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:role:add']">新增</el-button>
+        <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermission="['system:role:add']"
+          >新增</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -50,7 +52,7 @@
           icon="Edit"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['system:role:edit']"
+          v-hasPermission="['system:role:edit']"
           >修改</el-button
         >
       </el-col>
@@ -61,12 +63,12 @@
           icon="Delete"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['system:role:remove']"
+          v-hasPermission="['system:role:remove']"
           >删除</el-button
         >
       </el-col>
       <el-col :span="1.5">
-        <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:role:export']"
+        <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermission="['system:role:export']"
           >导出</el-button
         >
       </el-col>
@@ -99,34 +101,34 @@
         <template #default="scope">
           <el-tooltip content="修改" placement="top" v-if="scope.row.roleId !== 1">
             <el-button
-              type="text"
+              link
               icon="Edit"
               @click="handleUpdate(scope.row)"
-              v-hasPermi="['system:role:edit']"
+              v-hasPermission="['system:role:edit']"
             ></el-button>
           </el-tooltip>
           <el-tooltip content="删除" placement="top" v-if="scope.row.roleId !== 1">
             <el-button
-              type="text"
+              link
               icon="Delete"
               @click="handleDelete(scope.row)"
-              v-hasPermi="['system:role:remove']"
+              v-hasPermission="['system:role:remove']"
             ></el-button>
           </el-tooltip>
           <el-tooltip content="数据权限" placement="top" v-if="scope.row.roleId !== 1">
             <el-button
-              type="text"
+              link
               icon="CircleCheck"
               @click="handleDataScope(scope.row)"
-              v-hasPermi="['system:role:edit']"
+              v-hasPermission="['system:role:edit']"
             ></el-button>
           </el-tooltip>
           <el-tooltip content="分配用户" placement="top" v-if="scope.row.roleId !== 1">
             <el-button
-              type="text"
+              link
               icon="User"
               @click="handleAuthUser(scope.row)"
-              v-hasPermi="['system:role:edit']"
+              v-hasPermission="['system:role:edit']"
             ></el-button>
           </el-tooltip>
         </template>
@@ -182,7 +184,7 @@
             node-key="menuId"
             :check-strictly="!form.menuCheckStrictly"
             empty-text="加载中，请稍候"
-            :props="{label: 'label', children: 'children'}"
+            :props="{ label: 'label', children: 'children' }"
           ></el-tree>
         </el-form-item>
         <el-form-item label="备注">
@@ -233,7 +235,7 @@
             node-key="id"
             :check-strictly="!form.deptCheckStrictly"
             empty-text="加载中，请稍候"
-            :props="{label: 'label', children: 'children'}"
+            :props="{ label: 'label', children: 'children' }"
           ></el-tree>
         </el-form-item>
       </el-form>
@@ -248,13 +250,21 @@
 </template>
 
 <script setup name="Role">
-import {addRole, changeRoleStatus, changeDataScope, deleteRole, getRole, listRole, updateRole} from '@/api/system/role';
-import {getMenuSelectTreeByRole, getMenuSelectTree} from '@/api/system/menu';
-import {getDeptSelectTree, getDeptTreeSelectByRole} from '@/api/system/dept';
+import {
+  addRole,
+  changeRoleStatus,
+  changeDataScope,
+  deleteRole,
+  getRole,
+  listRole,
+  updateRole,
+} from '@/api/system/role';
+import { getMenuSelectTreeByRole, getMenuSelectTree } from '@/api/system/menu';
+import { getDeptSelectTree, getDeptTreeSelectByRole } from '@/api/system/dept';
 
 const router = useRouter();
-const {proxy} = getCurrentInstance();
-const {sys_status} = proxy.useDict('sys_status');
+const { proxy } = getCurrentInstance();
+const { sys_status } = proxy.useDict('sys_status');
 
 const roleList = ref([]);
 const open = ref(false);
@@ -278,11 +288,11 @@ const deptRef = ref(null);
 
 /** 数据范围选项 */
 const dataScopeOptions = ref([
-  {value: '1', label: '全部数据权限'},
-  {value: '2', label: '自定数据权限'},
-  {value: '3', label: '本部门数据权限'},
-  {value: '4', label: '本部门及以下数据权限'},
-  {value: '5', label: '仅本人数据权限'},
+  { value: '1', label: '全部数据权限' },
+  { value: '2', label: '自定数据权限' },
+  { value: '3', label: '本部门数据权限' },
+  { value: '4', label: '本部门及以下数据权限' },
+  { value: '5', label: '仅本人数据权限' },
 ]);
 
 const data = reactive({
@@ -295,13 +305,13 @@ const data = reactive({
     status: undefined,
   },
   rules: {
-    roleName: [{required: true, message: '角色名称不能为空', trigger: 'blur'}],
-    roleKey: [{required: true, message: '权限字符不能为空', trigger: 'blur'}],
-    roleSort: [{required: true, message: '角色顺序不能为空', trigger: 'blur'}],
+    roleName: [{ required: true, message: '角色名称不能为空', trigger: 'blur' }],
+    roleKey: [{ required: true, message: '权限字符不能为空', trigger: 'blur' }],
+    roleSort: [{ required: true, message: '角色顺序不能为空', trigger: 'blur' }],
   },
 });
 
-const {queryParams, form, rules} = toRefs(data);
+const { queryParams, form, rules } = toRefs(data);
 
 /** 查询角色列表 */
 function getList() {
@@ -440,7 +450,7 @@ function handleUpdate(row) {
     open.value = true;
     nextTick(() => {
       roleMenu.then((res) => {
-        const {checkedKeys} = res;
+        const { checkedKeys } = res;
         checkedKeys.forEach((v) => {
           nextTick(() => {
             menuRef.value.setChecked(v, true, false);

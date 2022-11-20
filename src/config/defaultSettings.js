@@ -1,12 +1,16 @@
+// 布局设置   在src/store/modules/settings 文件夹进行设置
 export default {
   /**
    * 网页标题
    */
   title: import.meta.env.VITE_APP_TITLE,
+
   /**
    * 侧边栏主题 深色主题theme-dark，浅色主题theme-light
+   * src\assets\styles\sidebar.scss 具体配置
    */
   sideTheme: 'theme-dark',
+
   /**
    * 是否系统布局配置
    */

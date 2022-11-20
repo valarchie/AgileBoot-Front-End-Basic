@@ -1,10 +1,20 @@
 <template>
   <div v-if="!item.hidden">
-    <template v-if="hasOneShowingChild(item.children, item) && (!onlyOneChild.children || onlyOneChild.noShowingChildren) && !item.alwaysShow">
+    <template
+      v-if="
+        hasOneShowingChild(item.children, item) &&
+        (!onlyOneChild.children || onlyOneChild.noShowingChildren) &&
+        !item.alwaysShow
+      "
+    >
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path, onlyOneChild.query)">
         <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{ 'submenu-title-noDropdown': !isNest }">
-          <svg-icon :icon-class="onlyOneChild.meta.icon || (item.meta && item.meta.icon)"/>
-          <template #title><span class="menu-title" :title="hasTitle(onlyOneChild.meta.title)">{{ onlyOneChild.meta.title }}</span></template>
+          <svg-icon :icon-class="onlyOneChild.meta.icon || (item.meta && item.meta.icon)" />
+          <template #title
+            ><span class="menu-title" :title="hasTitle(onlyOneChild.meta.title)">{{
+              onlyOneChild.meta.title
+            }}</span></template
+          >
         </el-menu-item>
       </app-link>
     </template>
@@ -30,7 +40,7 @@
 <script setup>
 import { isExternal } from '@/utils/validate';
 import AppLink from './Link';
-import { getNormalPath } from '@/utils/ruoyi';
+import { getNormalPath } from '@/utils/common';
 
 const props = defineProps({
   // route object

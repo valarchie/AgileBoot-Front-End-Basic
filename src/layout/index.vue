@@ -1,6 +1,6 @@
 <template>
   <div :class="classObj" class="app-wrapper" :style="{ '--current-color': theme }">
-    <div v-if="device === 'mobile' && sidebar.opened" class="drawer-bg" @click="handleClickOutside"/>
+    <div v-if="device === 'mobile' && sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
     <sidebar v-if="!sidebar.hide" class="sidebar-container" />
     <div :class="{ hasTagsView: needTagsView, sidebarHide: sidebar.hide }" class="main-container">
       <div :class="{ 'fixed-header': fixedHeader }">
@@ -16,10 +16,8 @@
 <script setup>
 import { useWindowSize } from '@vueuse/core';
 import Sidebar from './components/Sidebar/index.vue';
-import {
-  AppMain, Navbar, Settings, TagsView,
-} from './components';
-import defaultSettings from '@/settings';
+import { AppMain, Navbar, Settings, TagsView } from './components';
+import defaultSettings from '@/config/defaultSettings';
 
 const store = useStore();
 const theme = computed(() => store.state.settings.theme);
@@ -62,8 +60,8 @@ function setLayout() {
 </script>
 
 <style lang="scss" scoped>
-  @import "@/assets/styles/mixin.scss";
-  @import "@/assets/styles/variables.module.scss";
+@import '@/assets/styles/mixin.scss';
+@import '@/assets/styles/variables.module.scss';
 
 .app-wrapper {
   @include clearfix;

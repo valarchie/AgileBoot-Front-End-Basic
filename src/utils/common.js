@@ -35,7 +35,7 @@ export function parseTime(time, pattern) {
     s: date.getSeconds(),
     a: date.getDay(),
   };
-  const time_str = format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
+  const timeStr = format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
     let value = formatObj[key];
     // Note: getDay() returns 0 on Sunday
     if (key === 'a') {
@@ -46,7 +46,7 @@ export function parseTime(time, pattern) {
     }
     return value || 0;
   });
-  return time_str;
+  return timeStr;
 }
 
 // 表单重置
@@ -56,40 +56,23 @@ export function resetForm(refName) {
   }
 }
 
-// TODO 弃用  添加日期范围
-export function addDateRange(params, dateRange, propName) {
-  const search = params;
-  search.params = typeof search.params === 'object'
-    && search.params !== null
-    && !Array.isArray(search.params)
-    ? search.params
-    : {};
-  dateRange = Array.isArray(dateRange) ? dateRange : [];
-  if (typeof propName === 'undefined') {
-    search.params.beginTime = dateRange[0];
-    search.params.endTime = dateRange[1];
-  } else {
-    search.params[`begin${propName}`] = dateRange[0];
-    search.params[`end${propName}`] = dateRange[1];
-  }
-  return search;
-}
-
+// 添加时间查询参数
 export function addTimeRange(params, dateRange) {
-  params.beginTime = dateRange[0];
-  params.endTime = dateRange[1];
+  const [beginTime, endTime] = dateRange;
+  params.beginTime = beginTime;
+  params.endTime = endTime;
   return params;
 }
 
 // 回显数据字典
-export function selectDictLabel(datas, value) {
+export function selectDictLabel(dicts, value) {
   if (value === undefined) {
     return '';
   }
   const actions = [];
-  Object.keys(datas).some((key) => {
-    if (datas[key].value == `${value}`) {
-      actions.push(datas[key].label);
+  Object.keys(dicts).some((key) => {
+    if (dicts[key].value === `${value}`) {
+      actions.push(dicts[key].label);
       return true;
     }
   });
@@ -122,25 +105,9 @@ export function selectDictLabels(datas, value, separator) {
   return actions.join('').substring(0, actions.join('').length - 1);
 }
 
-// 字符串格式化(%s )
-export function sprintf(str) {
-  const args = arguments;
-  let flag = true;
-  let i = 1;
-  str = str.replace(/%s/g, () => {
-    const arg = args[i++];
-    if (typeof arg === 'undefined') {
-      flag = false;
-      return '';
-    }
-    return arg;
-  });
-  return flag ? str : '';
-}
-
 // 转换字符串，undefined,null等转化为""
 export function parseStrEmpty(str) {
-  if (!str || str == 'undefined' || str == 'null') {
+  if (!str || str === 'undefined' || str === 'null' || str === null) {
     return '';
   }
   return str;
@@ -150,7 +117,7 @@ export function parseStrEmpty(str) {
 export function mergeRecursive(source, target) {
   for (const p in target) {
     try {
-      if (target[p].constructor == Object) {
+      if (target[p].constructor === Object) {
         source[p] = mergeRecursive(source[p], target[p]);
       } else {
         source[p] = target[p];
@@ -217,7 +184,7 @@ export function handleTree(data, id, parentId, children) {
  * 参数处理
  * @param {*} params  参数
  */
-export function tansParams(params) {
+export function encodeURIParams(params) {
   let result = '';
   for (const propName of Object.keys(params)) {
     const value = params[propName];
@@ -241,7 +208,7 @@ export function tansParams(params) {
 
 // 返回项目路径
 export function getNormalPath(p) {
-  if (p.length === 0 || !p || p == 'undefined') {
+  if (p.length === 0 || !p || p === undefined) {
     return p;
   }
   const res = p.replace('//', '/');

@@ -8,13 +8,13 @@ import store from '@/store';
 export default {
   mounted(el, binding, vnode) {
     const { value } = binding;
-    const super_admin = 'admin';
+    const superAdmin = 'admin';
     const currentRole = store.getters && store.getters.role;
 
     if (value && value instanceof Array && value.length > 0) {
       const roleFlag = value;
 
-      const hasRole = super_admin === currentRole || roleFlag.includes(currentRole);
+      const hasRole = superAdmin === currentRole || roleFlag.includes(currentRole);
 
       if (!hasRole) {
         el.parentNode && el.parentNode.removeChild(el);
