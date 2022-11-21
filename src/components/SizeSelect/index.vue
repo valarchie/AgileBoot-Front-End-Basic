@@ -6,7 +6,12 @@
       </div>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item v-for="item of sizeOptions" :key="item.value" :disabled="size === item.value" :command="item.value">
+          <el-dropdown-item
+            v-for="item of sizeOptions"
+            :key="item.value"
+            :disabled="size === item.value"
+            :command="item.value"
+          >
             {{ item.label }}
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -23,6 +28,7 @@ const size = computed(() => store.getters.size);
 const route = useRoute();
 const router = useRouter();
 const { proxy } = getCurrentInstance();
+
 const sizeOptions = ref([
   { label: '较大', value: 'large' },
   { label: '默认', value: 'default' },
@@ -41,6 +47,7 @@ function refreshView() {
     });
   });
 }
+
 function handleSetSize(size) {
   proxy.$modal.loading('正在设置布局大小，请稍候...');
   store.dispatch('app/setSize', size);
@@ -48,7 +55,7 @@ function handleSetSize(size) {
 }
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .size-icon--style {
   font-size: 18px;
   line-height: 50px;

@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-const url = ref('https://gitee.com/y_project/RuoYi-Vue');
+const url = ref('https://github.com/valarchie/AgileBoot-Back-End');
 
 function goto() {
   window.open(url.value);

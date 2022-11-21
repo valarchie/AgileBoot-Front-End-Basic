@@ -1,6 +1,11 @@
 <template>
   <div class="navbar">
-    <hamburger id="hamburger-container" :is-active="getters.sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
+    <hamburger
+      id="hamburger-container"
+      :is-active="getters.sidebar.opened"
+      class="hamburger-container"
+      @toggleClick="toggleSideBar"
+    />
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" v-if="!$store.state.settings.topNav" />
     <top-nav id="topmenu-container" class="topmenu-container" v-if="$store.state.settings.topNav" />
 
@@ -9,11 +14,11 @@
         <header-search id="header-search" class="right-menu-item" />
 
         <el-tooltip content="源码地址" effect="dark" placement="bottom">
-          <ruo-yi-git id="ruoyi-git" class="right-menu-item hover-effect" />
+          <project-git id="project-git" class="right-menu-item hover-effect" />
         </el-tooltip>
 
         <el-tooltip content="文档地址" effect="dark" placement="bottom">
-          <ruo-yi-doc id="ruoyi-doc" class="right-menu-item hover-effect" />
+          <project-doc id="project-doc" class="right-menu-item hover-effect" />
         </el-tooltip>
 
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
@@ -55,8 +60,8 @@ import Hamburger from '@/components/Hamburger';
 import Screenfull from '@/components/Screenfull';
 import SizeSelect from '@/components/SizeSelect';
 import HeaderSearch from '@/components/HeaderSearch';
-import RuoYiGit from '@/components/RuoYi/Git';
-import RuoYiDoc from '@/components/RuoYi/Doc';
+import ProjectGit from '@/components/Project/Git';
+import ProjectDoc from '@/components/Project/Doc';
 
 const store = useStore();
 const getters = computed(() => store.getters);
@@ -83,11 +88,13 @@ function logout() {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
     type: 'warning',
-  }).then(() => {
-    store.dispatch('LogOut').then(() => {
-      location.href = '/index';
-    });
-  }).catch(() => { });
+  })
+    .then(() => {
+      store.dispatch('LogOut').then(() => {
+        location.href = '/index';
+      });
+    })
+    .catch(() => {});
 }
 
 const emits = defineEmits(['setLayout']);
@@ -96,7 +103,7 @@ function setLayout() {
 }
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .navbar {
   height: 50px;
   overflow: hidden;

@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-const url = ref('http://doc.ruoyi.vip/ruoyi-vue');
+const url = ref('https://juejin.cn/column/7159946528827080734');
 
 function goto() {
   window.open(url.value);

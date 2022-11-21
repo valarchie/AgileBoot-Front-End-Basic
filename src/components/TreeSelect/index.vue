@@ -29,7 +29,6 @@
 </template>
 
 <script setup>
-
 const { proxy } = getCurrentInstance();
 
 const props = defineProps({
@@ -72,13 +71,14 @@ const valueId = computed({
     emit('update:value', val);
   },
 });
+
 const valueTitle = ref('');
 const defaultExpandedKey = ref([]);
 
 function initHandle() {
   nextTick(() => {
     const selectedValue = valueId.value;
-    if (selectedValue !== null && typeof (selectedValue) !== 'undefined') {
+    if (selectedValue !== null && typeof selectedValue !== 'undefined') {
       const node = proxy.$refs.selectTree.getNode(selectedValue);
       if (node) {
         valueTitle.value = node.data[props.objMap.label];
@@ -90,6 +90,7 @@ function initHandle() {
     }
   });
 }
+
 function handleNodeClick(node) {
   valueTitle.value = node[props.objMap.label];
   valueId.value = node[props.objMap.value];
@@ -97,19 +98,23 @@ function handleNodeClick(node) {
   proxy.$refs.treeSelect.blur();
   selectFilterData('');
 }
+
 function selectFilterData(val) {
   proxy.$refs.selectTree.filter(val);
 }
+
 function filterNode(value, data) {
   if (!value) return true;
   return data[props.objMap.label].indexOf(value) !== -1;
 }
+
 function clearHandle() {
   valueTitle.value = '';
   valueId.value = '';
   defaultExpandedKey.value = [];
   clearSelected();
 }
+
 function clearSelected() {
   const allNode = document.querySelectorAll('#tree-option .el-tree-node');
   allNode.forEach((element) => element.classList.remove('is-current'));
@@ -124,8 +129,8 @@ watch(valueId, () => {
 });
 </script>
 
-<style lang='scss' scoped>
-@import "@/assets/styles/variables.module.scss";
+<style lang="scss" scoped>
+@import '@/assets/styles/variables.module.scss';
 .el-scrollbar .el-scrollbar__view .el-select-dropdown__item {
   padding: 0;
   background-color: #fff;
