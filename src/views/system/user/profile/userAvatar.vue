@@ -1,27 +1,29 @@
 <template>
-  <div class="user-info-head" @click="editCropper()"><img :src="options.img" title="点击上传头像" class="img-circle img-lg" /></div>
-  <el-dialog :title="title" v-model="open" width="800px" append-to-body @opened="modalOpened"  @close="closeDialog">
+  <div class="user-info-head" @click="editCropper()">
+    <img :src="options.img" title="点击上传头像" class="img-circle img-lg" />
+  </div>
+  <el-dialog :title="title" v-model="open" width="800px" append-to-body @opened="modalOpened" @close="closeDialog">
     <el-row>
-      <el-col :xs="24" :md="12" :style="{height: '350px'}">
+      <el-col :xs="24" :md="12" :style="{ height: '350px' }">
         <vue-cropper
-            ref="cropper"
-            :img="options.img"
-            :info="true"
-            :autoCrop="options.autoCrop"
-            :autoCropWidth="options.autoCropWidth"
-            :autoCropHeight="options.autoCropHeight"
-            :fixedBox="options.fixedBox"
-            @realTime="realTime"
-            v-if="visible"
+          ref="cropper"
+          :img="options.img"
+          :info="true"
+          :autoCrop="options.autoCrop"
+          :autoCropWidth="options.autoCropWidth"
+          :autoCropHeight="options.autoCropHeight"
+          :fixedBox="options.fixedBox"
+          @realTime="realTime"
+          v-if="visible"
         />
       </el-col>
-      <el-col :xs="24" :md="12" :style="{height: '350px'}">
+      <el-col :xs="24" :md="12" :style="{ height: '350px' }">
         <div class="avatar-upload-preview">
-          <img :src="options.previews.url" :style="options.previews.img"/>
+          <img :src="options.previews.url" :style="options.previews.img" />
         </div>
       </el-col>
     </el-row>
-    <br/>
+    <br />
     <el-row>
       <el-col :lg="2" :md="2">
         <el-upload action="#" :http-request="requestUpload" :show-file-list="false" :before-upload="beforeUpload">
@@ -31,19 +33,19 @@
           </el-button>
         </el-upload>
       </el-col>
-      <el-col :lg="{span: 1, offset: 2}" :md="2">
+      <el-col :lg="{ span: 1, offset: 2 }" :md="2">
         <el-button icon="Plus" @click="changeScale(1)"></el-button>
       </el-col>
-      <el-col :lg="{span: 1, offset: 1}" :md="2">
+      <el-col :lg="{ span: 1, offset: 1 }" :md="2">
         <el-button icon="Minus" @click="changeScale(-1)"></el-button>
       </el-col>
-      <el-col :lg="{span: 1, offset: 1}" :md="2">
+      <el-col :lg="{ span: 1, offset: 1 }" :md="2">
         <el-button icon="RefreshLeft" @click="rotateLeft()"></el-button>
       </el-col>
-      <el-col :lg="{span: 1, offset: 1}" :md="2">
+      <el-col :lg="{ span: 1, offset: 1 }" :md="2">
         <el-button icon="RefreshRight" @click="rotateRight()"></el-button>
       </el-col>
-      <el-col :lg="{span: 2, offset: 6}" :md="2">
+      <el-col :lg="{ span: 2, offset: 6 }" :md="2">
         <el-button type="primary" @click="uploadImg()">提 交</el-button>
       </el-col>
     </el-row>
@@ -53,7 +55,8 @@
 <script setup>
 import 'vue-cropper/dist/index.css';
 import { VueCropper } from 'vue-cropper';
-import { uploadAvatar } from '@/api/system/user';
+// import { uploadAvatar } from '@/api/system/user';
+import * as userApi from '@/api/system/userApi';
 
 const store = useStore();
 const { proxy } = getCurrentInstance();
@@ -81,8 +84,7 @@ function modalOpened() {
   visible.value = true;
 }
 /** 覆盖默认上传行为 */
-function requestUpload() {
-}
+function requestUpload() {}
 /** 向左旋转 */
 function rotateLeft() {
   proxy.$refs.cropper.rotateLeft();
@@ -113,7 +115,7 @@ function uploadImg() {
   proxy.$refs.cropper.getCropBlob((data) => {
     const formData = new FormData();
     formData.append('avatarfile', data);
-    uploadAvatar(formData).then((response) => {
+    userApi.uploadAvatar(formData).then((response) => {
       open.value = false;
       options.img = import.meta.env.VITE_APP_BASE_API + response.imgUrl;
       store.commit('SET_AVATAR', options.img);
@@ -133,7 +135,7 @@ function closeDialog() {
 }
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .user-info-head {
   position: relative;
   display: inline-block;
@@ -141,7 +143,7 @@ function closeDialog() {
 }
 
 .user-info-head:hover:after {
-  content: "+";
+  content: '+';
   position: absolute;
   left: 0;
   right: 0;

@@ -136,7 +136,8 @@
 </template>
 
 <script setup name="Config">
-import { listConfig, getConfig, updateConfig, refreshCache } from '@/api/system/config';
+// import { listConfig, getConfig, updateConfig, refreshCache } from '@/api/system/configApi';
+import * as configApi from '@/api/system/configApi';
 
 const { proxy } = getCurrentInstance();
 const { sys_yes_no } = proxy.useDict('sys_yes_no');
@@ -173,7 +174,8 @@ const { queryParams, form, rules } = toRefs(data);
 /** 查询参数列表 */
 function getList() {
   loading.value = true;
-  listConfig(proxy.addTimeRange(queryParams.value, dateRange.value))
+  configApi
+    .listConfig(proxy.addTimeRange(queryParams.value, dateRange.value))
     .then((response) => {
       configList.value = response.rows;
       total.value = response.total;
@@ -222,7 +224,7 @@ function handleSelectionChange(selection) {
 function handleUpdate(row) {
   reset();
   const configId = row.configId || ids.value;
-  getConfig(configId).then((response) => {
+  configApi.getConfig(configId).then((response) => {
     form.value = response;
     open.value = true;
     title.value = '修改参数';
@@ -232,7 +234,7 @@ function handleUpdate(row) {
 function submitForm() {
   proxy.$refs.configRef.validate((valid) => {
     if (valid) {
-      updateConfig(form.value).then(() => {
+      configApi.updateConfig(form.value).then(() => {
         proxy.$modal.msgSuccess('修改成功');
         open.value = false;
         getList();
@@ -243,7 +245,7 @@ function submitForm() {
 
 /** 刷新缓存按钮操作 */
 function handleRefreshCache() {
-  refreshCache().then(() => {
+  configApi.refreshCache().then(() => {
     proxy.$modal.msgSuccess('刷新缓存成功');
   });
 }

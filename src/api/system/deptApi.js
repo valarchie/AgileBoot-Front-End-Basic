@@ -10,7 +10,7 @@ export function listDept(query) {
 }
 
 // 查询部门列表（排除当前自身节点）
-export function listDeptExcludeCurrentDeptItself(deptId) {
+export function listDeptExcludeItself(deptId) {
   return request({
     url: `/system/dept/list/exclude/${deptId}`,
     method: 'get',
@@ -34,7 +34,7 @@ export function getDeptSelectTree() {
 }
 
 // 根据角色ID查询部门树结构
-export function getDeptTreeSelectByRole(roleId) {
+export function getDeptSelectTreeByRole(roleId) {
   return request({
     url: `/system/dept/dropdownList/role/${roleId}`,
     method: 'get',

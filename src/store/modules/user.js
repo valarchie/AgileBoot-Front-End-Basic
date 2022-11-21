@@ -1,4 +1,5 @@
-import { login, logout, getLoginUserInfo } from '@/api/login';
+// import { login, logout, getLoginUserInfo } from '@/api/loginApi';
+import * as loginApi from '@/api/loginApi';
 import { getToken, setToken, removeToken } from '@/utils/token';
 import defAva from '@/assets/images/profile.jpg';
 
@@ -41,7 +42,8 @@ const user = {
       const { code } = userInfo;
       const { uuid } = userInfo;
       return new Promise((resolve, reject) => {
-        login(username, password, code, uuid)
+        loginApi
+          .login(username, password, code, uuid)
           .then((res) => {
             setToken(res.token);
             commit('SET_TOKEN', res.token);
@@ -56,7 +58,8 @@ const user = {
     // 获取用户信息
     GetInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
-        getLoginUserInfo()
+        loginApi
+          .getLoginUserInfo()
           .then((res) => {
             const { user } = res;
             // console.log(user);
@@ -85,7 +88,8 @@ const user = {
     // 退出系统
     LogOut({ commit, state }) {
       return new Promise((resolve, reject) => {
-        logout(state.token)
+        loginApi
+          .logout(state.token)
           .then(() => {
             commit('SET_TOKEN', '');
             commit('SET_ROLE', null);

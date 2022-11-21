@@ -58,7 +58,12 @@
         >
       </el-col>
       <el-col :span="1.5">
-        <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermission="['system:logininfor:export']"
+        <el-button
+          type="warning"
+          plain
+          icon="Download"
+          @click="handleExport"
+          v-hasPermission="['system:logininfor:export']"
           >导出</el-button
         >
       </el-col>
@@ -118,10 +123,11 @@
 </template>
 
 <script setup name="Logininfor">
-import {list, deleteLoginInfo, cleanLoginInfo} from '@/api/monitor/logininfor';
+// import {list, deleteLoginInfo, cleanLoginInfo} from '@/api/monitor/logininfor';
+import * as loginInfoApi from '@/api/monitor/loginInfoApi';
 
-const {proxy} = getCurrentInstance();
-const {sys_operation_status} = proxy.useDict('sys_operation_status');
+const { proxy } = getCurrentInstance();
+const { sys_operation_status } = proxy.useDict('sys_operation_status');
 
 const logininforList = ref([]);
 const loading = ref(true);
@@ -130,7 +136,7 @@ const ids = ref([]);
 const multiple = ref(true);
 const total = ref(0);
 const dateRange = ref([]);
-const defaultSort = ref({prop: 'loginTime', order: 'descending'});
+const defaultSort = ref({ prop: 'loginTime', order: 'descending' });
 
 // 查询参数
 const queryParams = ref({
@@ -146,7 +152,8 @@ const queryParams = ref({
 /** 查询登录日志列表 */
 function getList() {
   loading.value = true;
-  list(proxy.addTimeRange(queryParams.value, dateRange.value))
+  loginInfoApi
+    .list(proxy.addTimeRange(queryParams.value, dateRange.value))
     .then((response) => {
       logininforList.value = response.rows;
       total.value = response.total;
@@ -183,7 +190,7 @@ function handleDelete(row) {
   const infoIds = row.infoId || ids.value;
   proxy.$modal
     .confirm(`是否确认删除访问编号为"${infoIds}"的数据项?`)
-    .then(() => deleteLoginInfo(infoIds))
+    .then(() => loginInfoApi.deleteLoginInfo(infoIds))
     .then(() => {
       getList();
       proxy.$modal.msgSuccess('删除成功');
@@ -194,7 +201,7 @@ function handleDelete(row) {
 function handleClean() {
   proxy.$modal
     .confirm('是否确认清空所有登录日志数据项?')
-    .then(() => cleanLoginInfo())
+    .then(() => loginInfoApi.deleteAll())
     .then(() => {
       getList();
       proxy.$modal.msgSuccess('清空成功');

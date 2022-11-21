@@ -18,7 +18,7 @@ export function deleteOperationLog(operationId) {
 }
 
 // 清空操作日志
-export function cleanOperlog() {
+export function deleteAll() {
   return request({
     url: '/operationLog/clean',
     method: 'delete',

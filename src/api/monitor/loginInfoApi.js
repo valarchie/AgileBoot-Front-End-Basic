@@ -18,7 +18,7 @@ export function deleteLoginInfo(infoId) {
 }
 
 // 清空登录日志
-export function cleanLoginInfo() {
+export function deleteAll() {
   return request({
     url: '/loginInfo/clean',
     method: 'delete',

@@ -55,7 +55,8 @@
 </template>
 
 <script setup name="SelectUser">
-import {addRoleOfAllUser, unallocatedUserList} from '@/api/system/role';
+// import {addRoleOfAllUser, unallocatedUserList} from '@/api/system/roleApi';
+import * as roleApi from '@/api/system/roleApi';
 
 const props = defineProps({
   roleId: {
@@ -63,8 +64,8 @@ const props = defineProps({
   },
 });
 
-const {proxy} = getCurrentInstance();
-const {sys_status} = proxy.useDict('sys_status');
+const { proxy } = getCurrentInstance();
+const { sys_status } = proxy.useDict('sys_status');
 
 const userList = ref([]);
 const visible = ref(false);
@@ -95,7 +96,7 @@ function handleSelectionChange(selection) {
 }
 // 查询表数据
 function getList() {
-  unallocatedUserList(queryParams).then((res) => {
+  roleApi.getRoleUnassignedUserList(queryParams).then((res) => {
     userList.value = res.rows;
     total.value = res.total;
   });
@@ -113,13 +114,13 @@ function resetQuery() {
 const emit = defineEmits(['ok']);
 /** 选择授权用户操作 */
 function handleSelectUser() {
-  const {roleId} = queryParams;
+  const { roleId } = queryParams;
   const uIds = userIds.value.join(',');
   if (userIds.value.length == 0) {
     proxy.$modal.msgError('请选择要分配的用户');
     return;
   }
-  addRoleOfAllUser({roleId, userIds: uIds}).then((res) => {
+  roleApi.addRoleOfAllUser({ roleId, userIds: uIds }).then((res) => {
     proxy.$modal.msgSuccess('分配角色成功！');
     //  if (res.code === 0) {
     visible.value = false;

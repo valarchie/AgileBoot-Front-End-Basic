@@ -373,8 +373,10 @@
 
 <script setup name="User">
 import { getToken } from '@/utils/token';
-import { getDeptSelectTree } from '@/api/system/dept';
-import { changeUserStatus, listUser, resetUserPwd, delUser, getUser, updateUser, addUser } from '@/api/system/user';
+// import { getDeptSelectTree } from '@/api/system/deptApi';
+import * as deptApi from '@/api/system/deptApi';
+// import { changeUserStatus, listUser, resetUserPwd, delUser, getUser, updateUser, addUser } from '@/api/system/userApi';
+import * as userApi from '@/api/system/userApi';
 
 const router = useRouter();
 const { proxy } = getCurrentInstance();
@@ -469,14 +471,15 @@ watch(deptName, (val) => {
 });
 /** 查询部门下拉树结构 */
 function getTreeSelect() {
-  getDeptSelectTree().then((response) => {
+  deptApi.getDeptSelectTree().then((response) => {
     deptOptions.value = response;
   });
 }
 /** 查询用户列表 */
 function getList() {
   loading.value = true;
-  listUser(proxy.addTimeRange(queryParams.value, dateRange.value))
+  userApi
+    .listUser(proxy.addTimeRange(queryParams.value, dateRange.value))
     .then((res) => {
       userList.value = res.rows;
       total.value = res.total;
@@ -506,7 +509,7 @@ function handleDelete(row) {
   const userIds = row.userId || ids.value;
   proxy.$modal
     .confirm(`是否确认删除用户编号为"${userIds}"的数据项？`)
-    .then(() => delUser(userIds))
+    .then(() => userApi.deleteUser(userIds))
     .then(() => {
       getList();
       proxy.$modal.msgSuccess('删除成功');
@@ -528,7 +531,7 @@ function handleStatusChange(row) {
   const text = row.status === '0' ? '停用' : '启用';
   proxy.$modal
     .confirm(`确认要"${text}""${row.username}"用户吗?`)
-    .then(() => changeUserStatus(row.userId, row.status))
+    .then(() => userApi.changeUserStatus(row.userId, row.status))
     .then(() => {
       proxy.$modal.msgSuccess(`${text}成功`);
     })
@@ -565,7 +568,7 @@ function handleResetPwd(row) {
       inputErrorMessage: '用户密码长度必须介于 5 和 20 之间',
     })
     .then(({ value }) => {
-      resetUserPwd(row.userId, value).then((response) => {
+      userApi.resetUserPassword(row.userId, value).then((response) => {
         proxy.$modal.msgSuccess(`修改成功，新密码是：${value}`);
       });
     })
@@ -610,7 +613,7 @@ function submitFileForm() {
 function initTreeData() {
   // 判断部门的数据是否存在，存在不获取，不存在则获取
   if (deptOptions.value === undefined) {
-    getDeptSelectTree().then((response) => {
+    deptApi.getDeptSelectTree().then((response) => {
       deptOptions.value = response;
     });
   }
@@ -642,7 +645,7 @@ function cancel() {
 function handleAdd() {
   reset();
   initTreeData();
-  getUser().then((response) => {
+  userApi.getUser().then((response) => {
     postOptions.value = response.posts;
     roleOptions.value = response.roles;
     open.value = true;
@@ -655,7 +658,7 @@ function handleUpdate(row) {
   reset();
   initTreeData();
   const userId = row.userId || ids.value;
-  getUser(userId).then((response) => {
+  userApi.getUser(userId).then((response) => {
     form.value = response.user;
     postOptions.value = response.posts;
     roleOptions.value = response.roles;
@@ -671,13 +674,13 @@ function submitForm() {
   proxy.$refs.userRef.validate((valid) => {
     if (valid) {
       if (form.value.userId != undefined) {
-        updateUser(form.value).then((response) => {
+        userApi.updateUser(form.value).then((response) => {
           proxy.$modal.msgSuccess('修改成功');
           open.value = false;
           getList();
         });
       } else {
-        addUser(form.value).then((response) => {
+        userApi.addUser(form.value).then((response) => {
           proxy.$modal.msgSuccess('新增成功');
           open.value = false;
           getList();

@@ -37,7 +37,7 @@ export function updateUser(data) {
 }
 
 // 删除用户
-export function delUser(userId) {
+export function deleteUser(userId) {
   return request({
     url: `/system/user/${userId}`,
     method: 'delete',
@@ -45,7 +45,7 @@ export function delUser(userId) {
 }
 
 // 用户密码重置
-export function resetUserPwd(userId, password) {
+export function resetUserPassword(userId, password) {
   const data = {
     userId,
     password,
@@ -88,7 +88,7 @@ export function updateUserProfile(data) {
 }
 
 // 用户密码重置
-export function updateUserPwd(oldPassword, newPassword) {
+export function updateUserPassword(oldPassword, newPassword) {
   const data = {
     oldPassword,
     newPassword,
@@ -110,7 +110,7 @@ export function uploadAvatar(data) {
 }
 
 // 查询授权角色
-export function getAuthRole(userId) {
+export function getRoleOfUser(userId) {
   return request({
     url: `/system/user/${userId}/role/`,
     method: 'get',
@@ -118,7 +118,7 @@ export function getAuthRole(userId) {
 }
 
 // 保存授权角色
-export function updateAuthRole(data) {
+export function updateRoleOfUser(data) {
   const { userId } = data.userId;
   return request({
     url: `/system/user/${userId}/role/`,

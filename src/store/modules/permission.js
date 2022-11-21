@@ -1,5 +1,6 @@
 import { constantRoutes } from '@/router';
-import { getRouters } from '@/api/menu';
+// import { getRouters } from '@/api/loginApi';
+import * as loginApi from '@/api/loginApi';
 import Layout from '@/layout/index';
 import ParentView from '@/components/ParentView';
 import InnerLink from '@/layout/components/InnerLink';
@@ -35,7 +36,7 @@ const permission = {
     GenerateRoutes({ commit }) {
       return new Promise((resolve) => {
         // 向后端请求路由数据
-        getRouters().then((res) => {
+        loginApi.getRouters().then((res) => {
           const sdata = JSON.parse(JSON.stringify(res));
           const rdata = JSON.parse(JSON.stringify(res));
           const defaultData = JSON.parse(JSON.stringify(res));

@@ -54,7 +54,8 @@
 
 <script setup>
 import Cookies from 'js-cookie';
-import { getCodeImg } from '@/api/login';
+// import { getCodeImg } from '@/api/loginApi';
+import * as loginApi from '@/api/loginApi';
 import { encrypt, decrypt } from '@/utils/rsaUtil';
 
 const store = useStore();
@@ -116,7 +117,7 @@ function handleLogin() {
 }
 
 function getCode() {
-  getCodeImg().then((res) => {
+  loginApi.getCodeImg().then((res) => {
     isCaptchaOn.value = res.isCaptchaOn === undefined ? true : res.isCaptchaOn;
     if (isCaptchaOn.value) {
       codeUrl.value = `data:image/gif;base64,${res.img}`;

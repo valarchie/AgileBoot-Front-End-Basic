@@ -72,8 +72,8 @@
 
 <script setup>
 import { ElMessageBox } from 'element-plus';
-import { getCodeImg, register } from '@/api/login';
-
+// import { getCodeImg, register } from '@/api/loginApi';
+import * as loginApi from '@/api/loginApi';
 const router = useRouter();
 const { proxy } = getCurrentInstance();
 
@@ -127,7 +127,8 @@ function handleRegister() {
   proxy.$refs.registerRef.validate((valid) => {
     if (valid) {
       loading.value = true;
-      register(registerForm.value)
+      loginApi
+        .register(registerForm.value)
         .then((res) => {
           const { username } = registerForm.value;
           ElMessageBox.alert(`<font color='red'>恭喜你，您的账号 ${username} 注册成功！</font>`, '系统提示', {
@@ -150,7 +151,7 @@ function handleRegister() {
 }
 
 function getCode() {
-  getCodeImg().then((res) => {
+  loginApi.getCodeImg().then((res) => {
     isCaptchaOn.value = res.isCaptchaOn === undefined ? true : res.isCaptchaOn;
     if (isCaptchaOn.value) {
       codeUrl.value = `data:image/gif;base64,${res.img}`;

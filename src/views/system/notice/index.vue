@@ -147,7 +147,8 @@
 </template>
 
 <script setup name="Notice">
-import { listNotice, getNotice, deleteNotice, addNotice, updateNotice } from '@/api/system/notice';
+// import { listNotice, getNotice, deleteNotice, addNotice, updateNotice } from '@/api/system/notice';
+import * as noticeApi from '@/api/system/noticeApi';
 
 const { proxy } = getCurrentInstance();
 const { sys_notice_status, sys_notice_type } = proxy.useDict('sys_notice_status', 'sys_notice_type');
@@ -182,7 +183,8 @@ const { queryParams, form, rules } = toRefs(data);
 /** 查询公告列表 */
 function getList() {
   loading.value = true;
-  listNotice(queryParams.value)
+  noticeApi
+    .listNotice(queryParams.value)
     .then((response) => {
       noticeList.value = response.rows;
       total.value = response.total;
@@ -233,7 +235,7 @@ function handleAdd() {
 function handleUpdate(row) {
   reset();
   const noticeId = row.noticeId || ids.value;
-  getNotice(noticeId).then((response) => {
+  noticeApi.getNotice(noticeId).then((response) => {
     form.value = response;
     open.value = true;
     title.value = '修改公告';
@@ -244,13 +246,13 @@ function submitForm() {
   proxy.$refs.noticeRef.validate((valid) => {
     if (valid) {
       if (form.value.noticeId !== undefined) {
-        updateNotice(form.value).then((response) => {
+        noticeApi.updateNotice(form.value).then((response) => {
           proxy.$modal.msgSuccess('修改成功');
           open.value = false;
           getList();
         });
       } else {
-        addNotice(form.value).then((response) => {
+        noticeApi.addNotice(form.value).then((response) => {
           proxy.$modal.msgSuccess('新增成功');
           open.value = false;
           getList();
@@ -264,7 +266,7 @@ function handleDelete(row) {
   const noticeIds = row.noticeId || ids.value;
   proxy.$modal
     .confirm(`是否确认删除公告编号为"${noticeIds}"的数据项？`)
-    .then(() => deleteNotice(noticeIds))
+    .then(() => noticeApi.deleteNotice(noticeIds))
     .then(() => {
       getList();
       proxy.$modal.msgSuccess('删除成功');

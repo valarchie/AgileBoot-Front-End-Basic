@@ -1,4 +1,4 @@
-import { getDictType } from '@/api/system/config';
+import { getDictType } from '@/api/system/configApi';
 import store from '../store';
 /**
  * 获取字典数据

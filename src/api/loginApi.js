@@ -61,3 +61,10 @@ export function getCodeImg() {
     timeout: 20000,
   });
 }
+
+// 获取路由
+export const getRouters = () =>
+  request({
+    url: '/getRouters',
+    method: 'get',
+  });

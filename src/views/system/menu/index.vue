@@ -275,7 +275,8 @@
 </template>
 
 <script setup name="Menu">
-import { addMenu, deleteMenu, getMenu, listMenu, updateMenu } from '@/api/system/menu';
+// import { addMenu, deleteMenu, getMenu, listMenu, updateMenu } from '@/api/system/menuApi';
+import * as menuApi from '@/api/system/menuApi';
 import SvgIcon from '@/components/SvgIcon';
 import IconSelect from '@/components/IconSelect';
 
@@ -311,7 +312,8 @@ const { queryParams, form, rules } = toRefs(data);
 /** 查询菜单列表 */
 function getList() {
   loading.value = true;
-  listMenu(queryParams.value)
+  menuApi
+    .listMenu(queryParams.value)
     .then((response) => {
       menuList.value = proxy.handleTree(response, 'menuId');
     })
@@ -322,7 +324,7 @@ function getList() {
 /** 查询菜单下拉树结构 */
 function getTreeSelect() {
   menuOptions.value = [];
-  listMenu().then((response) => {
+  menuApi.listMenu().then((response) => {
     const menu = { menuId: 0, menuName: '主类目', children: [] };
     menu.children = proxy.handleTree(response, 'menuId');
     menuOptions.value.push(menu);
@@ -397,7 +399,7 @@ function toggleExpandAll() {
 async function handleUpdate(row) {
   reset();
   await getTreeSelect();
-  getMenu(row.menuId).then((response) => {
+  menuApi.getMenu(row.menuId).then((response) => {
     form.value = response;
     open.value = true;
     title.value = '修改菜单';
@@ -408,13 +410,13 @@ function submitForm() {
   proxy.$refs.menuRef.validate((valid) => {
     if (valid) {
       if (form.value.menuId != undefined) {
-        updateMenu(form.value).then((response) => {
+        menuApi.updateMenu(form.value).then((response) => {
           proxy.$modal.msgSuccess('修改成功');
           open.value = false;
           getList();
         });
       } else {
-        addMenu(form.value).then((response) => {
+        menuApi.addMenu(form.value).then((response) => {
           proxy.$modal.msgSuccess('新增成功');
           open.value = false;
           getList();
@@ -427,7 +429,7 @@ function submitForm() {
 function handleDelete(row) {
   proxy.$modal
     .confirm(`是否确认删除名称为"${row.menuName}"的数据项?`)
-    .then(() => deleteMenu(row.menuId))
+    .then(() => menuApi.deleteMenu(row.menuId))
     .then(() => {
       getList();
       proxy.$modal.msgSuccess('删除成功');

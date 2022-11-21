@@ -120,6 +120,7 @@ function generateRoutes(routes, basePath = '', prefixTitle = []) {
   }
   return res;
 }
+
 function querySearch(query) {
   if (query !== '') {
     options.value = fuse.value.search(query);

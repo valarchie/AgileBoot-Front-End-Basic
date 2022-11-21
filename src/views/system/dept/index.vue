@@ -134,14 +134,8 @@
 </template>
 
 <script setup name="Dept">
-import {
-  listDept,
-  getDept,
-  deleteDept,
-  addDept,
-  updateDept,
-  listDeptExcludeCurrentDeptItself,
-} from '@/api/system/dept';
+// import { listDept, getDept,deleteDept,addDept,updateDept,listDeptExcludeCurrentDeptItself } from '@/api/system/deptApi';
+import * as deptApi from '@/api/system/deptApi';
 
 const { proxy } = getCurrentInstance();
 const { sys_status } = proxy.useDict('sys_status');
@@ -175,7 +169,8 @@ const { queryParams, form, rules } = toRefs(data);
 /** 查询部门列表 */
 function getList() {
   loading.value = true;
-  listDept(queryParams.value)
+  deptApi
+    .listDept(queryParams.value)
     .then((response) => {
       deptList.value = proxy.handleTree(response, 'deptId');
     })
@@ -214,7 +209,7 @@ function resetQuery() {
 /** 新增按钮操作 */
 function handleAdd(row) {
   reset();
-  listDept().then((response) => {
+  deptApi.listDept().then((response) => {
     deptOptions.value = proxy.handleTree(response, 'deptId');
   });
   if (row != undefined) {
@@ -234,10 +229,10 @@ function toggleExpandAll() {
 /** 修改按钮操作 */
 function handleUpdate(row) {
   reset();
-  listDeptExcludeCurrentDeptItself(row.deptId).then((response) => {
+  deptApi.listDeptExcludeItself(row.deptId).then((response) => {
     deptOptions.value = proxy.handleTree(response, 'deptId');
   });
-  getDept(row.deptId).then((response) => {
+  deptApi.getDept(row.deptId).then((response) => {
     form.value = response;
     open.value = true;
     title.value = '修改部门';
@@ -248,13 +243,13 @@ function submitForm() {
   proxy.$refs.deptRef.validate((valid) => {
     if (valid) {
       if (form.value.deptId != undefined) {
-        updateDept(form.value).then((response) => {
+        deptApi.updateDept(form.value).then((response) => {
           proxy.$modal.msgSuccess('修改成功');
           open.value = false;
           getList();
         });
       } else {
-        addDept(form.value).then((response) => {
+        deptApi.addDept(form.value).then((response) => {
           proxy.$modal.msgSuccess('新增成功');
           open.value = false;
           getList();
@@ -267,7 +262,7 @@ function submitForm() {
 function handleDelete(row) {
   proxy.$modal
     .confirm(`是否确认删除名称为"${row.deptName}"的数据项?`)
-    .then(() => deleteDept(row.deptId))
+    .then(() => deptApi.deleteDept(row.deptId))
     .then(() => {
       getList();
       proxy.$modal.msgSuccess('删除成功');

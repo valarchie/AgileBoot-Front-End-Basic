@@ -8,7 +8,6 @@ import { isHttp } from '@/utils/validate';
 import { isReLogin } from '@/utils/request';
 
 NProgress.configure({ showSpinner: false });
-
 const whiteList = ['/login', '/auth-redirect', '/bind', '/register'];
 
 router.beforeEach((to, from, next) => {
@@ -16,13 +15,11 @@ router.beforeEach((to, from, next) => {
   if (getToken()) {
     to.meta.title && store.dispatch('settings/setTitle', to.meta.title);
 
-    console.log(store.getters.role);
     /* has token */
     if (to.path === '/login') {
       next({ path: '/' });
       NProgress.done();
     } else if (!store.getters.role) {
-      console.log('重复获取');
       isReLogin.show = true;
       // 判断当前用户是否已拉取完user_info信息
       store

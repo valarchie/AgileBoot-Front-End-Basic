@@ -132,7 +132,8 @@
 </template>
 
 <script setup name="Post">
-import { listPost, addPost, deletePost, getPost, updatePost } from '@/api/system/post';
+// import { listPost, addPost, deletePost, getPost, updatePost } from '@/api/system/post';
+import * as postApi from '@/api/system/postApi';
 
 const { proxy } = getCurrentInstance();
 const { sys_status } = proxy.useDict('sys_status');
@@ -168,7 +169,8 @@ const { queryParams, form, rules } = toRefs(data);
 /** 查询岗位列表 */
 function getList() {
   loading.value = true;
-  listPost(queryParams.value)
+  postApi
+    .listPost(queryParams.value)
     .then((response) => {
       postList.value = response.rows;
       total.value = response.total;
@@ -220,7 +222,7 @@ function handleAdd() {
 function handleUpdate(row) {
   reset();
   const postId = row.postId || ids.value;
-  getPost(postId).then((response) => {
+  postApi.getPost(postId).then((response) => {
     form.value = response;
     open.value = true;
     title.value = '修改岗位';
@@ -231,13 +233,13 @@ function submitForm() {
   proxy.$refs.postRef.validate((valid) => {
     if (valid) {
       if (form.value.postId != undefined) {
-        updatePost(form.value).then((response) => {
+        postApi.updatePost(form.value).then((response) => {
           proxy.$modal.msgSuccess('修改成功');
           open.value = false;
           getList();
         });
       } else {
-        addPost(form.value).then((response) => {
+        postApi.addPost(form.value).then((response) => {
           proxy.$modal.msgSuccess('新增成功');
           open.value = false;
           getList();
@@ -251,7 +253,7 @@ function handleDelete(row) {
   const postIds = row.postId || ids.value;
   proxy.$modal
     .confirm(`是否确认删除岗位编号为"${postIds}"的数据项？`)
-    .then(() => deletePost(postIds))
+    .then(() => postApi.deletePost(postIds))
     .then(() => {
       getList();
       proxy.$modal.msgSuccess('删除成功');

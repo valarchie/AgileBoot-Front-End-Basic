@@ -91,7 +91,8 @@
 
 <script setup name="AuthUser">
 import selectUser from './selectUser';
-import { allocatedUserList, deleteRoleOfUser, deleteRoleOfSomeUser } from '@/api/system/role';
+// import { allocatedUserList, deleteRoleOfUser, deleteRoleOfSomeUser } from '@/api/system/role';
+import * as roleApi from '@/api/system/roleApi';
 
 const route = useRoute();
 const { proxy } = getCurrentInstance();
@@ -115,7 +116,8 @@ const queryParams = reactive({
 /** 查询授权用户列表 */
 function getList() {
   loading.value = true;
-  allocatedUserList(queryParams)
+  roleApi
+    .getRoleAssignedUserList(queryParams)
     .then((response) => {
       userList.value = response.rows;
       total.value = response.total;
@@ -152,7 +154,7 @@ function openSelectUser() {
 function cancelAuthUser(row) {
   proxy.$modal
     .confirm(`确认要取消该用户"${row.username}"角色吗？`)
-    .then(() => deleteRoleOfSomeUser({ userIds: row.userId }))
+    .then(() => roleApi.deleteRoleOfSomeUser({ userIds: row.userId }))
     .then(() => {
       getList();
       proxy.$modal.msgSuccess('取消授权成功');
@@ -165,7 +167,7 @@ function cancelAuthUserAll(row) {
   const uIds = userIds.value.join(',');
   proxy.$modal
     .confirm('是否取消选中用户授权数据项?')
-    .then(() => deleteRoleOfSomeUser({ roleId, userIds: uIds }))
+    .then(() => roleApi.deleteRoleOfSomeUser({ roleId, userIds: uIds }))
     .then(() => {
       getList();
       proxy.$modal.msgSuccess('取消授权成功');

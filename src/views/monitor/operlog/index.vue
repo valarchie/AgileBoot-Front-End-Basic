@@ -187,7 +187,8 @@
 </template>
 
 <script setup name="Operlog">
-import { list, deleteOperationLog, cleanOperlog } from '@/api/monitor/operlog';
+// import { list, deleteOperationLog, cleanOperlog } from '@/api/monitor/operationLogApi';
+import * as operationLogApi from '@/api/monitor/operationLogApi';
 
 const { proxy } = getCurrentInstance();
 const { sys_operation_type, sys_operation_status } = proxy.useDict('sys_operation_type', 'sys_operation_status');
@@ -221,7 +222,8 @@ const { queryParams, form } = toRefs(data);
 /** 查询登录日志 */
 function getList() {
   loading.value = true;
-  list(proxy.addTimeRange(queryParams.value, dateRange.value))
+  operationLogApi
+    .list(proxy.addTimeRange(queryParams.value, dateRange.value))
     .then((response) => {
       operlogList.value = response.rows;
       total.value = response.total;
@@ -267,7 +269,7 @@ function handleDelete(row) {
   const operationIds = row.operationId || ids.value;
   proxy.$modal
     .confirm(`是否确认删除日志编号为"${operationIds}"的数据项?`)
-    .then(() => deleteOperationLog(operationIds))
+    .then(() => operationLogApi.deleteOperationLog(operationIds))
     .then(() => {
       getList();
       proxy.$modal.msgSuccess('删除成功');
@@ -278,7 +280,7 @@ function handleDelete(row) {
 function handleClean() {
   proxy.$modal
     .confirm('是否确认清空所有操作日志数据项?')
-    .then(() => cleanOperlog())
+    .then(() => operationLogApi.deleteAll())
     .then(() => {
       getList();
       proxy.$modal.msgSuccess('清空成功');

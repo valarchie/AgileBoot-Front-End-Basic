@@ -53,7 +53,8 @@
 </template>
 
 <script setup name="Online">
-import { forceLogout, list as initData } from '@/api/monitor/online';
+// import { forceLogout, list as initData } from '@/api/monitor/online';
+import * as onlineUserApi from '@/api/monitor/onlineUserApi';
 
 const { proxy } = getCurrentInstance();
 
@@ -71,7 +72,8 @@ const queryParams = ref({
 /** 查询登录日志列表 */
 function getList() {
   loading.value = true;
-  initData(queryParams.value)
+  onlineUserApi
+    .list(queryParams.value)
     .then((response) => {
       onlineList.value = response.rows;
       total.value = response.total;
@@ -94,7 +96,7 @@ function resetQuery() {
 function handleForceLogout(row) {
   proxy.$modal
     .confirm(`是否确认强退名称为"${row.userName}"的用户?`)
-    .then(() => forceLogout(row.tokenId))
+    .then(() => onlineUserApi.forceLogout(row.tokenId))
     .then(() => {
       getList();
       proxy.$modal.msgSuccess('删除成功');
