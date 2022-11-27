@@ -24,7 +24,6 @@ module.exports = {
     'vue-global-api/ref',
     'vue-global-api/toRef',
   ],
-  extends: [],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
