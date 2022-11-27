@@ -9,11 +9,14 @@
 
 ## 平台简介
 
-* 本仓库为前端技术栈 [Vue3](https://v3.cn.vuejs.org) + [Element Plus](https://element-plus.org/zh-CN) + [Vite](https://cn.vitejs.dev) 版本。
-* 配套后端代码仓库地址[AgileBoot-Back-End](https://github.com/valarchie/AgileBoot-Back-End) 版本。
+- 本仓库为前端技术栈 [Vue3](https://v3.cn.vuejs.org) + [Element Plus](https://element-plus.org/zh-CN) + [Vite](https://cn.vitejs.dev) 版本。
+- 配套后端代码仓库地址[AgileBoot-Back-End](https://github.com/valarchie/AgileBoot-Back-End) 版本。
 
-* 阿里云折扣场：[点我进入](https://cn.aliyun.com/minisite/goods?from_alibabacloud=&userCode=djbhhf1x)，腾讯云秒杀场：[点我进入](https://url.cn/mKgcHVNb)&nbsp;&nbsp;
-* 阿里云优惠券：[点我领取](https://cn.aliyun.com/minisite/goods?from_alibabacloud=&userCode=djbhhf1x)，腾讯云优惠券：[点我领取](https://url.cn/mKgcHVNb)&nbsp;&nbsp;
+- 阿里云折扣场：[点我进入](https://cn.aliyun.com/minisite/goods?from_alibabacloud=&userCode=djbhhf1x)，腾讯云秒杀场：[点我进入](https://url.cn/mKgcHVNb)&nbsp;&nbsp;
+- 阿里云优惠券：[点我领取](https://cn.aliyun.com/minisite/goods?from_alibabacloud=&userCode=djbhhf1x)，腾讯云优惠券：[点我领取](https://url.cn/mKgcHVNb)&nbsp;&nbsp;
+
+规范请参照该文档
+https://gitee.com/MinJieLiu/web-standard#/MinJieLiu/web-standard
 
 ## 前端运行
 
@@ -51,21 +54,20 @@ npm run dev
 6.  参数管理：对系统动态配置常用参数。
 7.  通知公告：系统通知公告信息发布维护。
 8.  操作日志：系统正常操作日志记录和查询；系统异常信息日志记录和查询。
-9. 登录日志：系统登录日志记录查询包含登录异常。
+9.  登录日志：系统登录日志记录查询包含登录异常。
 10. 在线用户：当前系统中活跃用户状态监控。
-11. 系统接口：根据业务代码自动生成相关的api接口文档。
-12. 服务监控：监视当前系统CPU、内存、磁盘、堆栈等相关信息。
+11. 系统接口：根据业务代码自动生成相关的 api 接口文档。
+12. 服务监控：监视当前系统 CPU、内存、磁盘、堆栈等相关信息。
 13. 缓存监控：对系统的缓存信息查询，命令统计等。
-14. 连接池监视：监视当前系统数据库连接池状态，可进行分析SQL找出系统性能瓶颈。
+14. 连接池监视：监视当前系统数据库连接池状态，可进行分析 SQL 找出系统性能瓶颈。
 
 ## 在线体验
 
-- admin/admin123  
+- admin/admin123
 - 如果该项目对您有帮助，可以请作者喝个咖啡~
-![扫一扫](https://oscimg.oschina.net/oscnet/up-261828407c9089ad1cc0ce3f41a0ef3fbc0.png)
+  ![扫一扫](https://oscimg.oschina.net/oscnet/up-261828407c9089ad1cc0ce3f41a0ef3fbc0.png)
 
-
-演示地址：暂无， 可先参考Ruoyi的演示网站 http://vue.ruoyi.vip  
+演示地址：暂无， 可先参考 Ruoyi 的演示网站 http://vue.ruoyi.vip  
 文档地址：TODO http://doc.ruoyi.vip
 
 ## 演示图
@@ -102,7 +104,8 @@ npm run dev
    
 </table>
 
+## AgileBoot 前后端分离交流群
 
-## AgileBoot前后端分离交流群
 <!-- TODO 整改 -->
-QQ群：  [![加入QQ群](https://img.shields.io/badge/1398880-blue.svg)](https://qm.qq.com/cgi-bin/qm/qr?k=TR5guoXS0HssErVWefmdFRirJvfpEvp1&jump_from=webapi&authKey=VkWMmVhp/pNdWuRD8sqgM+Sv2+Vy2qCJQSeLmeXlLtfER2RJBi6zL56PdcRlCmTs) 点击按钮入群。
+
+QQ 群： [![加入QQ群](https://img.shields.io/badge/1398880-blue.svg)](https://qm.qq.com/cgi-bin/qm/qr?k=TR5guoXS0HssErVWefmdFRirJvfpEvp1&jump_from=webapi&authKey=VkWMmVhp/pNdWuRD8sqgM+Sv2+Vy2qCJQSeLmeXlLtfER2RJBi6zL56PdcRlCmTs) 点击按钮入群。
