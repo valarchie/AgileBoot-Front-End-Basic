@@ -67,7 +67,7 @@
             <ul>
               <li>Vue</li>
               <li>Vuex</li>
-              <li>Element-ui</li>
+              <li>Element-Plus</li>
               <li>Axios</li>
               <li>Sass</li>
               <li>Quill</li>
@@ -122,14 +122,9 @@
             </div>
           </template>
           <el-collapse accordion>
-            <el-collapse-item title="v1.0.1 - 2022-10-xx">
+            <el-collapse-item title="v1.6.0 - 2022-11-30">
               <ol>
-                <li>TODO LIST</li>
-              </ol>
-            </el-collapse-item>
-            <el-collapse-item title="v1.0.0 - 2022-10-08">
-              <ol>
-                <li>AgileBoot前后端分离系统正式发布</li>
+                <li>初步完成前后端的重构工作，将会在2.0版本后陆续添加新功能</li>
               </ol>
             </el-collapse-item>
           </el-collapse>
@@ -157,7 +152,7 @@
 </template>
 
 <script setup name="Index">
-const version = ref('1.5.0');
+const version = ref('1.6.0');
 
 function goTarget(url) {
   window.open(url, '__blank');
