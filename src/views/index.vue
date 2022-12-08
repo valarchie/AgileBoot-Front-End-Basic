@@ -126,6 +126,9 @@
               <ol>
                 <li>初步完成前后端的重构工作，将会在2.0版本后陆续添加新功能</li>
               </ol>
+              <ol>
+                <li>修复配置修改后缓存过期的问题，拦截对管理员的修改</li>
+              </ol>
             </el-collapse-item>
           </el-collapse>
         </el-card>

@@ -114,7 +114,7 @@ const sideTheme = ref(store.state.settings.sideTheme);
 const storeSettings = computed(() => store.state.settings);
 const predefineColors = ref(['#409EFF', '#ff4500', '#ff8c00', '#ffd700', '#90ee90', '#00ced1', '#1e90ff', '#c71585']);
 
-/** 是否需要topnav */
+/** 是否需要topNav */
 const topNav = computed({
   get: () => storeSettings.value.topNav,
   set: (val) => {
@@ -128,7 +128,8 @@ const topNav = computed({
     }
   },
 });
-/** 是否需要tagview */
+
+/** 是否需要tagView */
 const tagsView = computed({
   get: () => storeSettings.value.tagsView,
   set: (val) => {
@@ -138,6 +139,7 @@ const tagsView = computed({
     });
   },
 });
+
 /** 是否需要固定头部 */
 const fixedHeader = computed({
   get: () => storeSettings.value.fixedHeader,
@@ -148,6 +150,7 @@ const fixedHeader = computed({
     });
   },
 });
+
 /** 是否需要侧边栏的logo */
 const sidebarLogo = computed({
   get: () => storeSettings.value.sidebarLogo,
@@ -158,6 +161,7 @@ const sidebarLogo = computed({
     });
   },
 });
+
 /** 是否需要侧边栏的动态网页的title */
 const dynamicTitle = computed({
   get: () => storeSettings.value.dynamicTitle,
@@ -178,6 +182,7 @@ function themeChange(val) {
   });
   theme.value = val;
 }
+
 function handleTheme(val) {
   store.dispatch('settings/changeSetting', {
     key: 'sideTheme',
@@ -185,6 +190,7 @@ function handleTheme(val) {
   });
   sideTheme.value = val;
 }
+
 function saveSetting() {
   proxy.$modal.loading('正在保存到本地，请稍候...');
   const layoutSetting = {
@@ -199,11 +205,13 @@ function saveSetting() {
   localStorage.setItem('layout-setting', JSON.stringify(layoutSetting));
   setTimeout(proxy.$modal.closeLoading(), 1000);
 }
+
 function resetSetting() {
   proxy.$modal.loading('正在清除设置缓存并刷新，请稍候...');
   localStorage.removeItem('layout-setting');
   setTimeout('window.location.reload()', 1000);
 }
+
 function openSetting() {
   showSettings.value = true;
 }
