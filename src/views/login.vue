@@ -48,7 +48,7 @@
     <!--  底部  -->
     <div class="el-login-footer">
       <span>Copyright © 2018-2022 Agileboot All Rights Reserved. </span>
-      <el-link href="https://beian.miit.gov.com" rel="external nofollow" target="_blank" type="primary"
+      <el-link href="https://beian.miit.gov.cn" rel="external nofollow" target="_blank" type="primary"
         >闽ICP备2022018106号-1</el-link
       >
     </div>
