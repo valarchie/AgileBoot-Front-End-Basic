@@ -1,5 +1,5 @@
 <template>
-   <i-frame v-model:src="url"></i-frame>
+  <i-frame v-model:src="url"></i-frame>
 </template>
 
 <script setup>
