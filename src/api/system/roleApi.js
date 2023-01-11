@@ -86,16 +86,6 @@ export function getRoleUnassignedUserList(query) {
   });
 }
 
-// 取消用户授权角色  弃用
-export function deleteRoleOfUser(data) {
-  const { roleId, userIds } = data;
-  return request({
-    url: `/system/role/users/${userIds}/grant`,
-    method: 'delete',
-    data,
-  });
-}
-
 // 批量取消用户授权角色
 export function deleteRoleOfSomeUser(data) {
   const { roleId, userIds } = data;

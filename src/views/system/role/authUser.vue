@@ -91,7 +91,6 @@
 
 <script setup name="AuthUser">
 import selectUser from './selectUser';
-// import { allocatedUserList, deleteRoleOfUser, deleteRoleOfSomeUser } from '@/api/system/role';
 import * as roleApi from '@/api/system/roleApi';
 
 const route = useRoute();
