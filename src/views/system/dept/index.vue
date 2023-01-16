@@ -83,9 +83,10 @@
                 v-model="form.parentId"
                 :data="deptOptions"
                 :props="{ value: 'deptId', label: 'deptName', children: 'children' }"
-                value-key="deptId"
+                node-key="deptId"
                 placeholder="选择上级部门"
                 check-strictly
+                :current-node-key="form.parentId"
               />
             </el-form-item>
           </el-col>

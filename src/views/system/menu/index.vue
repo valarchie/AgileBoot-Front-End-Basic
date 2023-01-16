@@ -89,9 +89,10 @@
                 v-model="form.parentId"
                 :data="menuOptions"
                 :props="{ value: 'menuId', label: 'menuName', children: 'children' }"
-                value-key="menuId"
+                node-key="menuId"
                 placeholder="选择上级菜单"
                 check-strictly
+                :current-node-key="form.parentId"
               />
             </el-form-item>
           </el-col>
@@ -150,8 +151,8 @@
                 </span>
               </template>
               <el-radio-group v-model="form.isExternal">
-                <el-radio label="1">是</el-radio>
-                <el-radio label="0">否</el-radio>
+                <el-radio :label="1">是</el-radio>
+                <el-radio :label="0">否</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -227,8 +228,8 @@
                 </span>
               </template>
               <el-radio-group v-model="form.isCache">
-                <el-radio label="1">缓存</el-radio>
-                <el-radio label="0">不缓存</el-radio>
+                <el-radio :label="1">缓存</el-radio>
+                <el-radio :label="0">不缓存</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -322,9 +323,9 @@ function getList() {
     });
 }
 /** 查询菜单下拉树结构 */
-function getTreeSelect() {
+async function getTreeSelect() {
   menuOptions.value = [];
-  menuApi.listMenu().then((response) => {
+  await menuApi.listMenu().then((response) => {
     const menu = { menuId: 0, menuName: '主类目', children: [] };
     menu.children = proxy.handleTree(response, 'menuId');
     menuOptions.value.push(menu);
@@ -376,9 +377,9 @@ function resetQuery() {
   handleQuery();
 }
 /** 新增按钮操作 */
-function handleAdd(row) {
+async function handleAdd(row) {
   reset();
-  getTreeSelect();
+  await getTreeSelect();
   if (row != null && row.menuId) {
     form.value.parentId = row.menuId;
   } else {
