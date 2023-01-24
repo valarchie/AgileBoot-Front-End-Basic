@@ -75,7 +75,6 @@
       v-loading="loading"
       :data="logininforList"
       @selection-change="handleSelectionChange"
-      :default-sort="defaultSort"
       @sort-change="handleSortChange"
     >
       <el-table-column type="selection" width="55" align="center" />
@@ -98,14 +97,7 @@
         </template>
       </el-table-column>
       <el-table-column label="描述" align="center" prop="msg" />
-      <el-table-column
-        label="访问时间"
-        align="center"
-        prop="loginTime"
-        sortable="custom"
-        :sort-orders="['descending', 'ascending']"
-        width="180"
-      >
+      <el-table-column label="访问时间" align="center" prop="loginTime" sortable="custom" width="180">
         <template #default="scope">
           <span>{{ parseTime(scope.row.loginTime) }}</span>
         </template>
@@ -123,7 +115,6 @@
 </template>
 
 <script setup name="Logininfor">
-// import {list, deleteLoginInfo, cleanLoginInfo} from '@/api/monitor/logininfor';
 import * as loginInfoApi from '@/api/monitor/loginInfoApi';
 
 const { proxy } = getCurrentInstance();
@@ -145,8 +136,8 @@ const queryParams = ref({
   ipAddress: undefined,
   username: undefined,
   status: undefined,
-  orderByColumn: undefined,
-  isAsc: undefined,
+  orderByColumn: defaultSort.value.prop,
+  isAsc: defaultSort.value.order,
 });
 
 /** 查询登录日志列表 */
