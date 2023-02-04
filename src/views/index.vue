@@ -163,7 +163,7 @@
               style="width: 100%"
             />
             <span style="display: inline-block; height: 30px; line-height: 30px"
-              >如果觉得该项目对您有帮忙，可以小额捐赠支持该演示网站服务器等费用</span
+              >如果觉得该项目对您有帮助，可以小额捐赠支持该演示网站服务器等费用</span
             >
           </div>
         </el-card>
