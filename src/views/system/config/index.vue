@@ -33,6 +33,8 @@
           start-placeholder="开始日期"
           end-placeholder="结束日期"
         ></el-date-picker>
+        <!-- datepicker加lable会失效 因为datepicker里面两个input 所以加这个标签取巧修复这个问题 -->
+        <el-input v-show="false"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
