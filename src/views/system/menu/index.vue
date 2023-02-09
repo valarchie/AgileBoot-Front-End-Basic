@@ -105,7 +105,7 @@
               </el-radio-group>
             </el-form-item>
           </el-col>
-          <el-col :span="24" v-if="form.menuType != 'F'">
+          <el-col :span="24" v-if="form.menuType != '3'">
             <el-form-item label="菜单图标" prop="icon">
               <el-popover
                 placement="bottom-start"
@@ -115,7 +115,7 @@
                 @show="showSelectIcon"
               >
                 <template #reference>
-                  <el-input v-model="form.icon" placeholder="点击选择图标" @click="showSelectIcon" readonly>
+                  <el-input v-model="form.icon" placeholder="点击选择图标" @click.once="showSelectIcon" readonly>
                     <template #prefix>
                       <svg-icon
                         v-if="form.icon"
@@ -294,6 +294,7 @@ const isExpandAll = ref(false);
 const refreshTable = ref(true);
 const showChooseIcon = ref(false);
 const iconSelectRef = ref(null);
+const isTrue = true;
 
 const data = reactive({
   form: {},
