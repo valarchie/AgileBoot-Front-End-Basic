@@ -152,9 +152,9 @@
           <el-table-column label="状态" align="center" key="status" v-if="columns[5].visible">
             <template #default="scope">
               <el-switch
-                v-model="scope.row.status"
-                active-value="1"
-                inactive-value="0"
+                v-model.number="scope.row.status"
+                :active-value="1"
+                :inactive-value="0"
                 @change="handleStatusChange(scope.row)"
               ></el-switch>
             </template>
@@ -529,7 +529,7 @@ function handleExport() {
 }
 /** 用户状态修改  */
 function handleStatusChange(row) {
-  const text = row.status === '0' ? '停用' : '启用';
+  const text = row.status === 0 ? '停用' : '启用';
   proxy.$modal
     .confirm(`确认要"${text}""${row.username}"用户吗?`)
     .then(() => userApi.changeUserStatus(row.userId, row.status))
@@ -537,7 +537,7 @@ function handleStatusChange(row) {
       proxy.$modal.msgSuccess(`${text}成功`);
     })
     .catch(() => {
-      row.status = row.status === '0' ? '1' : '0';
+      row.status = row.status === 0 ? 1 : 0;
     });
 }
 /** 更多操作 */
@@ -630,7 +630,7 @@ function reset() {
     phoneNumber: undefined,
     email: undefined,
     sex: undefined,
-    status: '0',
+    status: 0,
     remark: undefined,
     postId: undefined,
     roleId: undefined,
