@@ -51,6 +51,9 @@ export function addTimeRange(params, dateRange) {
     const [beginTime, endTime] = dateRange;
     params.beginTime = beginTime;
     params.endTime = endTime;
+  } else {
+    params.beginTime = null;
+    params.endTime = null;
   }
   return params;
 }
