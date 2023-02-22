@@ -115,7 +115,7 @@
                 @show="showSelectIcon"
               >
                 <template #reference>
-                  <el-input v-model="form.icon" placeholder="点击选择图标" @click.once="showSelectIcon" readonly>
+                  <el-input v-model="form.icon" placeholder="点击选择图标" @click.stop="showSelectIcon" readonly>
                     <template #prefix>
                       <svg-icon
                         v-if="form.icon"
@@ -185,7 +185,7 @@
               <el-input v-model="form.component" placeholder="请输入组件路径" />
             </el-form-item>
           </el-col>
-          <el-col :span="12" v-if="form.menuType != '1'">
+          <el-col :span="12" v-if="form.menuType != 1">
             <el-form-item>
               <el-input v-model="form.perms" placeholder="请输入权限标识" maxlength="100" />
               <template #label>
@@ -214,7 +214,7 @@
               </template>
             </el-form-item>
           </el-col>
-          <el-col :span="12" v-if="form.menuType == '2'">
+          <el-col :span="12" v-if="form.menuType == 2">
             <el-form-item>
               <template #label>
                 <span>
