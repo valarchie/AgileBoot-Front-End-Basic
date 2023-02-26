@@ -638,8 +638,8 @@ function handleAdd() {
   reset();
   initTreeData();
   userApi.getUser().then((response) => {
-    postOptions.value = response.posts;
-    roleOptions.value = response.roles;
+    postOptions.value = response.postOptions;
+    roleOptions.value = response.roleOptions;
     open.value = true;
     title.value = '添加用户';
     form.value.password = initPassword.value;
@@ -652,8 +652,8 @@ function handleUpdate(row) {
   const userId = row.userId || ids.value;
   userApi.getUser(userId).then((response) => {
     form.value = response.user;
-    postOptions.value = response.posts;
-    roleOptions.value = response.roles;
+    postOptions.value = response.postOptions;
+    roleOptions.value = response.roleOptions;
     form.value.postId = response.postId;
     form.value.roleId = response.roleId;
     open.value = true;
