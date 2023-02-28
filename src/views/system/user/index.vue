@@ -149,6 +149,14 @@
             v-if="columns[4].visible"
             width="120"
           />
+          <el-table-column
+            label="角色"
+            align="center"
+            key="roleName"
+            prop="roleName"
+            v-if="columns[5].visible"
+            width="120"
+          />
           <el-table-column label="状态" align="center" key="status" v-if="columns[5].visible">
             <template #default="scope">
               <el-switch
