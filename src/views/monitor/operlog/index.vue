@@ -216,6 +216,8 @@ const data = reactive({
     username: undefined,
     businessType: undefined,
     status: undefined,
+    orderByColumn: defaultSort.value.prop,
+    isAsc: defaultSort.value.order,
   },
 });
 
