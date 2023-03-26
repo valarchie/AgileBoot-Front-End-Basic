@@ -1,5 +1,5 @@
 <p align="center">
-      <img src="https://img.shields.io/badge/Release-V1.7.0-green.svg" alt="Downloads">
+      <img src="https://img.shields.io/badge/Release-V1.8.0-green.svg" alt="Downloads">
       <img src="https://img.shields.io/badge/JDK-1.8+-green.svg" alt="Build Status">
   <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Build Status">
    <img src="https://img.shields.io/badge/Spring%20Boot-2.7.1-blue.svg" alt="Downloads">
@@ -14,7 +14,7 @@
 
 <img alt="logo" height="200" src="https://oscimg.oschina.net/oscnet/up-eda2a402cc061f1f5f40d9ac4c084f4c98c.png">
 </p>
-<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">AgileBoot v1.7.0</h1>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">AgileBoot v1.8.0</h1>
 
 <h4 align="center">基于SpringBoot+Vue3前后端分离的Java快速开发框架</h4>
 <p align="center">
@@ -71,7 +71,7 @@ npm run dev
 |     | 缓存监控   | 对系统的缓存信息查询，命令统计等                              |
 |     | 连接池监视 | 监视当前系统数据库连接池状态，可进行分析 SQL 找出系统性能瓶颈 |
 
-目前版本是 V1.7，将在 2.0 版本后陆续新增新功能。
+目前版本是 V1.8.0，将在 2.0 版本后陆续新增新功能。
 
 ## 💥 在线体验 💥
 

@@ -146,6 +146,30 @@
                 <li>替换所有Autowired注解</li>
               </ol>
             </el-collapse-item>
+            <el-collapse-item title="v1.8.0 - 2023-3-26">
+              <ol>
+                <li>fix新增用户密码未加密问题</li>
+                <li>fix统一的注入方式</li>
+                <li>修复Post请求获取不到beginTime/endTime参数</li>
+                <li>Icon选择框闪现问题</li>
+                <li>清除冗余的Jar包</li>
+                <li>fix菜单添加失败的BUG</li>
+                <li>统一使用CacheCenter作为统一缓存入口</li>
+                <li>fix菜单状态显示问题</li>
+                <li>重构后端路由相关代码</li>
+                <li>IP地址工具类重构修复</li>
+                <li>fix角色修改数据权限的Bug</li>
+                <li>fix多级缓存获取时间不一致的问题</li>
+                <li>fix角色分配的问题</li>
+                <li>日志列表倒序排列</li>
+                <li>引入SpringDoc和Knife4J</li>
+                <li>新增SpringTask的定时任务例子</li>
+                <li>新增实时权限控制</li>
+                <li>refactor写死的管理员判断逻辑</li>
+                <li>重构用户的角色信息</li>
+                <li>新增demo开关</li>
+              </ol>
+            </el-collapse-item>
           </el-collapse>
         </el-card>
       </el-col>
@@ -173,7 +197,7 @@
 </template>
 
 <script setup name="Index">
-const version = ref('1.7.0');
+const version = ref('1.8.0');
 
 function goTarget(url) {
   window.open(url, '__blank');
