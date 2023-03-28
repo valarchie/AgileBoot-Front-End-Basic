@@ -230,8 +230,12 @@ function toggleExpandAll() {
 /** 修改按钮操作 */
 function handleUpdate(row) {
   reset();
-  deptApi.listDeptExcludeItself(row.deptId).then((response) => {
-    deptOptions.value = proxy.handleTree(response, 'deptId');
+  deptApi.listDept(row.deptId).then((response) => {
+    const deptListExcludeItSelf = response.filter((dept) => {
+      return dept.deptId !== row.deptId;
+    });
+
+    deptOptions.value = proxy.handleTree(deptListExcludeItSelf, 'deptId');
   });
   deptApi.getDept(row.deptId).then((response) => {
     form.value = response;

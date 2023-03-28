@@ -9,14 +9,6 @@ export function listDept(query) {
   });
 }
 
-// 查询部门列表（排除当前自身节点）
-export function listDeptExcludeItself(deptId) {
-  return request({
-    url: `/system/dept/list/exclude/${deptId}`,
-    method: 'get',
-  });
-}
-
 // 查询部门详细
 export function getDept(deptId) {
   return request({
