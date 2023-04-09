@@ -25,14 +25,6 @@ export function getMenuSelectTree() {
   });
 }
 
-// 根据角色ID查询菜单下拉树结构
-export function getMenuSelectTreeByRole(roleId) {
-  return request({
-    url: `/system/menu/roleMenuTreeSelect/${roleId}`,
-    method: 'get',
-  });
-}
-
 // 新增菜单
 export function addMenu(data) {
   return request({

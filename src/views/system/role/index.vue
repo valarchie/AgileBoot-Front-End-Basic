@@ -255,9 +255,6 @@
 </template>
 
 <script setup name="Role">
-// import { addRole, changeRoleStatus, changeDataScope, deleteRole,  getRole,listRole,updateRole,} from '@/api/system/role';
-// import { getMenuSelectTreeByRole, getMenuSelectTree } from '@/api/system/menuApi';
-// import { getDeptSelectTree, getDeptTreeSelectByRole } from '@/api/system/deptApi';
 import * as roleApi from '@/api/system/roleApi';
 import * as menuApi from '@/api/system/menuApi';
 import * as deptApi from '@/api/system/deptApi';
@@ -441,21 +438,19 @@ function handleAdd() {
   title.value = '添加角色';
 }
 /** 修改角色 */
-function handleUpdate(row) {
+async function handleUpdate(row) {
   reset();
   const roleId = row.roleId || ids.value;
-  const roleMenu = getRoleMenuTreeSelect(roleId);
+  const roleMenu = await getRoleMenuTreeSelect(roleId);
   roleApi.getRole(roleId).then((response) => {
     form.value = response;
     form.value.roleSort = Number(form.value.roleSort);
     open.value = true;
+    const selectedMenuList = response.selectedMenuList;
     nextTick(() => {
-      roleMenu.then((res) => {
-        const { checkedKeys } = res;
-        checkedKeys.forEach((v) => {
-          nextTick(() => {
-            menuRef.value.setChecked(v, true, false);
-          });
+      selectedMenuList.forEach((v) => {
+        nextTick(() => {
+          menuRef.value.setChecked(v, true, false);
         });
       });
     });
@@ -464,16 +459,16 @@ function handleUpdate(row) {
 }
 /** 根据角色ID查询菜单树结构 */
 function getRoleMenuTreeSelect(roleId) {
-  return menuApi.getMenuSelectTreeByRole(roleId).then((response) => {
-    menuOptions.value = response.menus;
+  return menuApi.getMenuSelectTree(roleId).then((response) => {
+    menuOptions.value = response;
     return response;
   });
 }
 
 /** 根据角色ID查询部门树结构 */
 function getRoleDeptTreeSelect(roleId) {
-  return deptApi.getDeptSelectTreeByRole(roleId).then((response) => {
-    deptOptions.value = response.depts;
+  return deptApi.getDeptSelectTree(roleId).then((response) => {
+    deptOptions.value = response;
     return response;
   });
 }
@@ -549,24 +544,22 @@ function dataScopeSelectChange(value) {
   }
 }
 /** 分配数据权限操作 */
-function handleDataScope(row) {
+async function handleDataScope(row) {
   reset();
-  const roleDeptTreeResponse = getRoleDeptTreeSelect(row.roleId);
+  const roleDeptTreeResponse = await getRoleDeptTreeSelect(row.roleId);
+
   roleApi.getRole(row.roleId).then((response) => {
     form.value = response;
     openDataScope.value = true;
     nextTick(() => {
-      roleDeptTreeResponse.then((res) => {
-        nextTick(() => {
-          if (deptRef.value) {
-            deptRef.value.setCheckedKeys(res.checkedKeys);
-          }
-        });
-      });
+      if (deptRef.value) {
+        deptRef.value.setCheckedKeys(response.selectedDeptList);
+      }
     });
-    title.value = '分配数据权限';
   });
+  title.value = '分配数据权限';
 }
+
 /** 提交按钮（数据权限） */
 function submitDataScope() {
   if (form.value.roleId != undefined) {

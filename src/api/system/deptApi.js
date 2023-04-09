@@ -25,14 +25,6 @@ export function getDeptSelectTree() {
   });
 }
 
-// 根据角色ID查询部门树结构
-export function getDeptSelectTreeByRole(roleId) {
-  return request({
-    url: `/system/dept/dropdownList/role/${roleId}`,
-    method: 'get',
-  });
-}
-
 // 新增部门
 export function addDept(data) {
   return request({
