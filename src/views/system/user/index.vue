@@ -355,7 +355,7 @@
               type="primary"
               :underline="false"
               style="font-size: 12px; vertical-align: baseline"
-              @click="importTemplate"
+              @click="downloadTemplate"
               >下载模板</el-link
             >
           </div>
@@ -586,8 +586,8 @@ function handleImport() {
   upload.open = true;
 }
 /** 下载模板操作 */
-function importTemplate() {
-  proxy.download('system/user/importTemplate', {}, `user_template_${new Date().getTime()}.xlsx`);
+function downloadTemplate() {
+  proxy.download('system/user/downloadTemplate', {}, `user_template_${new Date().getTime()}.xlsx`);
 }
 /** 文件上传中处理 */
 const handleFileUploadProgress = (event, file, fileList) => {

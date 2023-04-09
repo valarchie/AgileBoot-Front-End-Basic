@@ -21,7 +21,7 @@
       </el-form-item>
       <el-form-item label="状态" prop="status">
         <el-select v-model="queryParams.status" placeholder="登录状态" clearable style="width: 240px">
-          <el-option v-for="dict in sys_operation_status" :key="dict.value" :label="dict.label" :value="dict.value" />
+          <el-option v-for="dict in sys_login_status" :key="dict.value" :label="dict.label" :value="dict.value" />
         </el-select>
       </el-form-item>
       <el-form-item label="登录时间" style="width: 308px">
@@ -94,7 +94,7 @@
       <el-table-column label="浏览器" align="center" prop="browser" :show-overflow-tooltip="true" />
       <el-table-column label="登录状态" align="center" prop="status">
         <template #default="scope">
-          <dict-tag :options="sys_operation_status" :value="scope.row.status" />
+          <dict-tag :options="sys_login_status" :value="scope.row.status" />
         </template>
       </el-table-column>
       <el-table-column label="描述" align="center" prop="msg" />
@@ -119,7 +119,7 @@
 import * as loginInfoApi from '@/api/monitor/loginInfoApi';
 
 const { proxy } = getCurrentInstance();
-const { sys_operation_status } = proxy.useDict('sys_operation_status');
+const { sys_login_status } = proxy.useDict('sys_login_status');
 
 const logininforList = ref([]);
 const loading = ref(true);
